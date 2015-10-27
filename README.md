@@ -31,6 +31,11 @@ Optional style object.
 #### `buttonStyle`
 Optional style object for buttons displayed on component.
 
+#### `buttonStyle`
+Optional style object for buttons displayed on component.
+
+#### `arrow`
+We provide an arrow that points to the selector, but you may optionally pass in your own React element in the place of the arrow provided.
 ### Use
 
 ```js

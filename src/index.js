@@ -96,7 +96,7 @@ export default class ReactUserTour extends Component {
 		}
 		const position = this.getStepPosition(currentTourStep.selector, this.props.style.width, this.props.style.height);
 		const style = Object.assign({}, this.props.style);
-		const arrow = this.getArrow(position.positioned, this.props.style.width, this.props.style.height);
+		const arrow = this.props.arrow || this.getArrow(position.positioned, this.props.style.width, this.props.style.height);
 
 		let extraButtonProps = {};
 		if (this.props.buttonStyle) {
