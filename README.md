@@ -48,6 +48,10 @@ Text that will appear on the button that moves the tour backwards. Defaults to `
 #### `doneButtonText`
 Text that will appear on the button that finishes the tour. Defaults to `Done`
 
+#### `hideButtons`
+Boolean to disable the showing of next/back/done buttons. Set this to true if you want to insert your own buttons in the body.
+
+
 ### Use
 
 ```js
@@ -68,13 +72,13 @@ export default class UserTour extends Component {
 							step: 1,
 							selector: ".my-fun-website",
 							title: <div style={tourTitleStyle}>My Web</div>,
-							message: <div style={tourMessageStyle}>Site</div>
+							body: <div style={tourMessageStyle}>Site</div>
 						},
 						{
 							step: 2,
 							selector: ".my-website-is-amazing",
 							title: <div style={tourTitleStyle}>Wow</div>,
-							message: <div style={tourMessageStyle}>so good</div>
+							body: <div style={tourMessageStyle}>so good</div>
 						}
 					]}
 				/>

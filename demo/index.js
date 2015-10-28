@@ -67,34 +67,32 @@ class Demo extends Component {
 							step: 1,
 							selector: ".stop-1",
 							title: <div style={tourTitleStyle}>My Web</div>,
-							message: <div style={tourMessageStyle}>Site</div>
+							body: <div style={tourMessageStyle}>Site</div>
 						},
 						{
 							step: 2,
 							selector: ".stop-2",
 							title: <div style={tourTitleStyle}>Wow</div>,
-							message: <div style={tourMessageStyle}>so good</div>
+							body: <div style={tourMessageStyle}>so good</div>
 						},
 						{
 							step: 3,
 							selector: ".stop-3",
 							title: <div style={tourTitleStyle}>Wowow</div>,
-							message: <div style={tourMessageStyle}>so good, i love it.</div>
+							body: <div style={tourMessageStyle}>so good, i love it.</div>
 						},
 						{
 							step: 4,
 							selector: ".stop-4",
 							title: <div style={tourTitleStyle}>Another</div>,
-							message: <div style={tourMessageStyle}>your site is very good.</div>
+							body: <div style={tourMessageStyle}>your site is very good.</div>
 						},
 						{
 							step: 5,
 							selector: ".stop-5",
 							title: <div style={tourTitleStyle}>Everyone Off</div>,
-							message: <div style={tourMessageStyle}>final stop, hope you enjoyed the tour.</div>
+							body: <div style={tourMessageStyle}>final stop, hope you enjoyed the tour.</div>
 						}
-
-
 					]}
 				/>
 			</div>

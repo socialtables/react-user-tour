@@ -111,14 +111,16 @@ export default class ReactUserTour extends Component {
 
 		const doneButton = this.props.step === this.props.steps.length ?
 			<TourButton onClick={() => this.props.onCancel()} {...extraButtonProps} className="react-user-tour-done-button">{this.props.doneButtonText}</TourButton> : "";
-
-		const tourButtonContainer = (
-			<div>
-				{nextButton}
-				{doneButton}
-				{backButton}
-			</div>
-		);
+		let tourButtonContainer;
+		if (!this.props.hideButtons) {
+			tourButtonContainer = (
+				<div className="react-user-tour-button-container">
+					{nextButton}
+					{doneButton}
+					{backButton}
+				</div>
+			);
+		}
 
 		const xStyle = {
 			"float": "right",
@@ -135,7 +137,7 @@ export default class ReactUserTour extends Component {
 							{arrow}
 							<span style={xStyle} onClick={this.props.onCancel}>Close</span>
 							{currentTourStep.title}
-							{currentTourStep.message}
+							{currentTourStep.body}
 							{tourButtonContainer}
 						</div>
 					}
@@ -160,5 +162,6 @@ ReactUserTour.defaultProps = {
 	onBack: () => {},
 	nextButtonText: "Next",
 	backButtonText: "Back",
-	doneButtonText: "Done"
+	doneButtonText: "Done",
+	hideButtons: false
 };
