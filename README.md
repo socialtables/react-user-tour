@@ -16,16 +16,16 @@ A boolean value representing whether or not the tour should currently be display
 An integer representing the current active step of the tour
 
 #### `onNext`
-function that fires when user clicks the Next button. Recieves the next step integer as a callback. For example if current step is 1 and user clicks the Next button onNext(2) will be called.
+function that fires when user clicks the Next button. Receives the next step integer as a callback. For example, if current step is 1 and user clicks the Next button, onNext(2) will be called.
 
 #### `onBack`
-function that fires when user clicks the Back button. Recieves the previous step integer as a callback. For example if current step is 2 and user clicks the Back button onBack(1) will be called.
+function that fires when user clicks the Back button. Receives the previous step integer as a callback. For example, if current step is 2 and user clicks the Back button, onBack(1) will be called.
 
 #### `onCancel`
 function that fires when user clicks the X button or the Done Button.
 
 #### `steps`
-An array of steps. takes step(integer), selector(css selector to be passed to document.querySelector()), title, a react element representing the header of the current step, message, a react element representing the main body mesasge of the tour step.
+An array of steps. Each step object takes: step (integer), selector (css selector to be passed to document.querySelector()), title (a react element representing the header of the current step), and body (a react element representing the main body message of the tour step).
 
 #### `style`
 Optional style object.
