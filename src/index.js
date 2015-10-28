@@ -104,13 +104,13 @@ export default class ReactUserTour extends Component {
 		}
 
 		const nextButton = this.props.step !== this.props.steps.length ?
-			<TourButton onClick={() => this.props.onNext(this.props.step + 1)} {...extraButtonProps} className="react-user-tour-next-button">Next</TourButton> : "";
+			<TourButton onClick={() => this.props.onNext(this.props.step + 1)} {...extraButtonProps} className="react-user-tour-next-button">{this.props.nextButtonText}</TourButton> : "";
 
 		const backButton = this.props.step !== 1 ?
-			<TourButton onClick={() => this.props.onBack(this.props.step - 1)} {...extraButtonProps} className="react-user-tour-back-button">Back</TourButton> : "";
+			<TourButton onClick={() => this.props.onBack(this.props.step - 1)} {...extraButtonProps} className="react-user-tour-back-button">{this.props.backButtonText}</TourButton> : "";
 
 		const doneButton = this.props.step === this.props.steps.length ?
-			<TourButton onClick={() => this.props.onCancel()} {...extraButtonProps} className="react-user-tour-done-button">Done</TourButton> : "";
+			<TourButton onClick={() => this.props.onCancel()} {...extraButtonProps} className="react-user-tour-done-button">{this.props.doneButtonText}</TourButton> : "";
 
 		const tourButtonContainer = (
 			<div>
@@ -157,5 +157,8 @@ ReactUserTour.defaultProps = {
 	},
 	onCancel: () => {},
 	onNext: () => {},
-	onBack: () => {}
+	onBack: () => {},
+	nextButtonText: "Next",
+	backButtonText: "Back",
+	doneButtonText: "Done"
 };

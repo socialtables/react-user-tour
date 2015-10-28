@@ -38,12 +38,22 @@ Optional style object for buttons displayed on component.
 
 #### `arrow`
 We provide an arrow that points to the selector, but you may optionally pass in your own React element in the place of the arrow provided.
+
+#### `nextButtonText`
+Text that will appear on the button that moves the tour forward. Defaults to `Next`
+
+#### `backButtonText`
+Text that will appear on the button that moves the tour backwards. Defaults to `Back`
+
+#### `doneButtonText`
+Text that will appear on the button that finishes the tour. Defaults to `Done`
+
 ### Use
 
 ```js
 import React, { Component } From "react";
 import Tour from "react-user-tour";
-export default class ShowImage extends Component {
+export default class UserTour extends Component {
 	render() {
 		return (
 			<div>
