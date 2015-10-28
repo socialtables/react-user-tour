@@ -16,7 +16,17 @@ export default class ReactUserTour extends Component {
 		const windowHeight = window.innerHeight;
 		const windowWidth = window.innerWidth;
 		const el = document.querySelector(selector);
-		const position = el ? el.getBoundingClientRect() : {};
+		let position = el ? el.getBoundingClientRect() : {};
+		const isElementCompletelyBelowViewBox = windowHeight - position.top < 0;
+		const isElementCompletelyAboveViewBox = position.bottom < 0;
+		if (isElementCompletelyBelowViewBox) {
+			window.scrollTo(0, position.bottom);
+			position = el.getBoundingClientRect();
+		}
+		else if (isElementCompletelyAboveViewBox) {
+			window.scrollTo(0, window.pageYOffset + position.top);
+			position = el.getBoundingClientRect();
+		}
 		const shouldPositionLeft = windowWidth - position.left < (windowWidth / 2);
 		const shouldPositionAbove = windowHeight - position.bottom < 100;
 		const shouldPositionBelow = position.top < 50;
