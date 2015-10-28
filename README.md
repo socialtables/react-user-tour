@@ -60,11 +60,18 @@ Boolean to disable the showing of the close text in the upper left of the compon
 import React, { Component } From "react";
 import Tour from "react-user-tour";
 export default class UserTour extends Component {
+	constructor() {
+		super();
+		this.state = {
+			isTourActive: true,
+			tourStep: 1
+		};
+	}
 	render() {
 		return (
 			<div>
 				<Tour
-					active={isTourActive}
+					active={this.state.isTourActive}
 					step={this.state.tourStep}
 					onNext={(step) => this.setState({tourStep: step})}
 					onBack={(step) => this.setState({tourStep: step})}
