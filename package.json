@@ -3,19 +3,24 @@
   "version": "0.0.1",
   "description": "give your user a guided tour around your application",
   "main": "dist/index.js",
+  "browserify": {
+    "transform": [
+      "babelify"
+    ]
+  },
   "scripts": {
-  	"test": "npm run lint",
-  	"lint": "./node_modules/.bin/eslint ./src",
-  	"build": "babel --plugins object-assign src --out-dir dist",
-  	"watch": "babel --plugins object-assign src --watch --out-dir dist",
-  	"prepublish": "npm run build"
+    "test": "npm run build && npm run lint &&  browserify test/index.js | tap-closer | smokestack | faucet && rm -rf test-dist",
+    "lint": "./node_modules/.bin/eslint ./src",
+    "build": "babel --plugins object-assign src --out-dir dist",
+    "watch": "babel --plugins object-assign src --watch --out-dir dist",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/socialtables/react-user-tour.git"
   },
   "bugs": {
-    "url": "https://github.com/socialtables/react-user-tour/issues"
+    "url": "hckagetps://github.com/socialtables/react-user-tour/issues"
   },
   "homepage": "https://github.com/socialtables/react-user-tour",
   "keywords": [
@@ -39,8 +44,18 @@
     "babel": "^5.8.29",
     "babel-core": "^5.8.29",
     "babel-plugin-object-assign": "^1.2.1",
+    "babelify": "^6.4.0",
+    "browserify": "^12.0.0",
     "eslint": "^1.7.3",
-    "eslint-plugin-react": "^3.6.3"
+    "eslint-plugin-react": "^3.6.3",
+    "faucet": "0.0.1",
+    "react": "^0.14.0",
+    "react-addons-test-utils": "^0.14.0",
+    "sinon": "^1.17.2",
+    "smokestack": "^3.4.1",
+    "tap-closer": "^1.0.0",
+    "tape": "^4.2.2",
+    "tape-catch": "^1.0.4"
   },
   "peerDependencies": {
     "react": "> 0.13.2"

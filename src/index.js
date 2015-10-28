@@ -86,7 +86,7 @@ export default class ReactUserTour extends Component {
 			default:
 				arrowStyle = {};
 		}
-		return <div style={arrowStyle} />;
+		return <div className="react-user-tour-arrow" style={arrowStyle} />;
 	}
 
 	render() {
@@ -104,13 +104,13 @@ export default class ReactUserTour extends Component {
 		}
 
 		const nextButton = this.props.step !== this.props.steps.length ?
-			<TourButton onClick={() => this.props.onNext(this.props.step + 1)} {...extraButtonProps}>Next</TourButton> : "";
+			<TourButton onClick={() => this.props.onNext(this.props.step + 1)} {...extraButtonProps} className="react-user-tour-next-button">Next</TourButton> : "";
 
 		const backButton = this.props.step !== 1 ?
-			<TourButton onClick={() => this.props.onBack(this.props.step - 1)} {...extraButtonProps}>Back</TourButton> : "";
+			<TourButton onClick={() => this.props.onBack(this.props.step - 1)} {...extraButtonProps} className="react-user-tour-back-button">Back</TourButton> : "";
 
 		const doneButton = this.props.step === this.props.steps.length ?
-			<TourButton onClick={() => this.props.onCancel()} {...extraButtonProps}>Done</TourButton> : "";
+			<TourButton onClick={() => this.props.onCancel()} {...extraButtonProps} className="react-user-tour-done-button">Done</TourButton> : "";
 
 		const tourButtonContainer = (
 			<div>
@@ -128,7 +128,7 @@ export default class ReactUserTour extends Component {
 		};
 
 		return (
-			<div>
+			<div className="react-user-tour-container">
 				<Motion style={{x: spring(position.left), y: spring(position.top)}}>
 					{({x, y}) =>
 						<div style={Object.assign({}, style, {transform: `translate3d(${x}px, ${y - 40}px, 0)`})}>

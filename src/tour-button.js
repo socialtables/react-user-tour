@@ -3,7 +3,7 @@ import React, { Component } from "react";
 export default class TourButton extends Component {
 	render() {
 		return (
-			<div style={this.props.style} onClick={this.props.onClick}>
+			<div style={this.props.style} onClick={this.props.onClick} {...this.props}>
 				{this.props.children}
 			</div>
 		);
