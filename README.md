@@ -51,6 +51,8 @@ Text that will appear on the button that finishes the tour. Defaults to `Done`
 #### `hideButtons`
 Boolean to disable the showing of next/back/done buttons. Set this to true if you want to insert your own buttons in the body.
 
+#### `hideClose`
+Boolean to disable the showing of the close text in the upper left of the component. Set this to true if you want to insert your own close functionality or if you would like to disable the ability for the user to prematurely exit the tour.
 
 ### Use
 

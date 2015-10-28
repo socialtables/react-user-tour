@@ -158,3 +158,19 @@ test("onCancel should be called once when the user clicks the done button", (ass
 	ReactDOM.unmountComponentAtNode(ReactDOM.findDOMNode(result));
 	assert.end();
 });
+
+test("the close button should be there if hideClose is not true", (assert) => {
+	const component = <Tour {...props} step={3}/>
+	const result = TestUtils.renderIntoDocument(component);
+	assert.ok(TestUtils.findRenderedDOMComponentWithClass(result, "react-user-tour-close"));
+	ReactDOM.unmountComponentAtNode(ReactDOM.findDOMNode(result));
+	assert.end();
+});
+
+test("the close button should not be there if hideClose is true", (assert) => {
+	const component = <Tour {...props} step={3}/>
+	const result = TestUtils.renderIntoDocument(component);
+	assert.throws(() => throwNoClass("react-user-tour-close"));
+	ReactDOM.unmountComponentAtNode(ReactDOM.findDOMNode(result));
+	assert.end();
+})

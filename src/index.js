@@ -139,14 +139,14 @@ export default class ReactUserTour extends Component {
 			"paddingRight": 10,
 			"paddingTop": 10
 		};
-
+		const closeButton = this.props.hideClose ? "" : <span className="react-user-tour-close" style={xStyle} onClick={this.props.onCancel}>Close</span>;
 		return (
 			<div className="react-user-tour-container">
 				<Motion style={{x: spring(position.left), y: spring(position.top)}}>
 					{({x, y}) =>
 						<div style={Object.assign({}, style, {transform: `translate3d(${x}px, ${y}px, 0)`})}>
 							{arrow}
-							<span style={xStyle} onClick={this.props.onCancel}>Close</span>
+							{closeButton}
 							{currentTourStep.title}
 							{currentTourStep.body}
 							{tourButtonContainer}
@@ -174,5 +174,6 @@ ReactUserTour.defaultProps = {
 	nextButtonText: "Next",
 	backButtonText: "Back",
 	doneButtonText: "Done",
-	hideButtons: false
+	hideButtons: false,
+	hideClose: false
 };
