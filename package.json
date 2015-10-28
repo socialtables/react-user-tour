@@ -36,7 +36,7 @@
     "react"
   ],
   "author": "Social Tables",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "dependencies": {
     "react-motion": "^0.3.1"
   },
