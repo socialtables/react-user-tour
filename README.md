@@ -2,6 +2,8 @@
 
 A component that allows you to give a user a guided tour around your application
 
+[![Circle CI](https://circleci.com/gh/socialtables/react-user-tour.svg?style=svg&circle-token=914785eeca4d096e0303a857f52f20a646013124)](https://circleci.com/gh/socialtables/react-user-tour)
+
 ### Install
 ` npm install react-user-tour`
 
