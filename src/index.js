@@ -131,9 +131,9 @@ export default class ReactUserTour extends Component {
 			<div className="react-user-tour-container">
 				<Motion style={{x: spring(position.left), y: spring(position.top)}}>
 					{({x, y}) =>
-						<div style={Object.assign({}, style, {transform: `translate3d(${x}px, ${y - 40}px, 0)`})}>
+						<div style={Object.assign({}, style, {transform: `translate3d(${x}px, ${y}px, 0)`})}>
 							{arrow}
-							<span style={xStyle} onClick={this.props.onCancel}>&#x2715;</span>
+							<span style={xStyle} onClick={this.props.onCancel}>Close</span>
 							{currentTourStep.title}
 							{currentTourStep.message}
 							{tourButtonContainer}

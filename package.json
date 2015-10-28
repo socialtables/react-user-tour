@@ -9,9 +9,10 @@
     ]
   },
   "scripts": {
-    "test": "npm run build && npm run lint &&  browserify test/index.js | tap-closer | smokestack | faucet && rm -rf test-dist",
+    "test": "npm run build && npm run lint &&  browserify test/index.js | tap-closer | smokestack | faucet",
     "lint": "./node_modules/.bin/eslint ./src",
     "build": "babel --plugins object-assign src --out-dir dist",
+    "build-demo": "browserify demo/index.js -o demo/bundle.js",
     "watch": "babel --plugins object-assign src --watch --out-dir dist",
     "prepublish": "npm run build"
   },
@@ -51,6 +52,7 @@
     "faucet": "0.0.1",
     "react": "^0.14.0",
     "react-addons-test-utils": "^0.14.0",
+    "react-dom": "^0.14.0",
     "sinon": "^1.17.2",
     "smokestack": "^3.4.1",
     "tap-closer": "^1.0.0",
