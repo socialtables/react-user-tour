@@ -21,14 +21,14 @@ export default class ReactUserTour extends Component {
 		const shouldPositionAbove = windowHeight - position.bottom < 100;
 		const shouldPositionBelow = position.top < 50;
 		let left = position.right + 25;
-		let top = position.top;
+		let top = position.top + window.pageYOffset;
 		let positioned = "right";
 		if (shouldPositionLeft && !shouldPositionAbove && !shouldPositionBelow) {
 			left = (position.left - 25) - tourElWidth;
 			positioned = "left";
 		}
 		else if (shouldPositionAbove) {
-			top = position.top - tourElHeight - ARROW_SIZE;
+			top = top - tourElHeight - ARROW_SIZE;
 			if (shouldPositionLeft) {
 				left = (position.left + 25) - tourElWidth;
 				positioned = "topLeft";
@@ -40,7 +40,7 @@ export default class ReactUserTour extends Component {
 		}
 
 		else if (shouldPositionBelow) {
-			top = position.top + el.offsetHeight + ARROW_SIZE;
+			top = top + el.offsetHeight + ARROW_SIZE;
 			if (shouldPositionLeft) {
 				left = (position.left + 25) - tourElWidth;
 				positioned = "bottomLeft";
@@ -50,6 +50,7 @@ export default class ReactUserTour extends Component {
 				positioned = "bottom";
 			}
 		}
+
 		return {
 			top: top,
 			left: left,
@@ -72,7 +73,7 @@ export default class ReactUserTour extends Component {
 				arrowStyle.top = height;
 				break;
 			case "topLeft":
-				arrowStyle = arrowDown;
+				arrowStyle = Object.assign({}, arrowDown);
 				arrowStyle.top = height;
 				arrowStyle.left = (width - 20) - ARROW_SIZE;
 				break;
@@ -80,7 +81,7 @@ export default class ReactUserTour extends Component {
 				arrowStyle = arrowUp;
 				break;
 			case "bottomLeft":
-				arrowStyle = arrowUp;
+				arrowStyle = Object.assign({}, arrowUp);
 				arrowStyle.left = (width - 20) - ARROW_SIZE;
 				break;
 			default:

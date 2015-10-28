@@ -158,8 +158,3 @@ test("onCancel should be called once when the user clicks the done button", (ass
 	ReactDOM.unmountComponentAtNode(ReactDOM.findDOMNode(result));
 	assert.end();
 });
-
-
-
-
-
