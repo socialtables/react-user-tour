@@ -4,10 +4,12 @@ import {Motion, spring} from "react-motion";
 import TourButton from "./tour-button";
 import { arrowUp, arrowDown, arrowLeft, arrowRight } from "./arrows";
 
-const ARROW_SIZE = 15;
-
 export default class ReactUserTour extends Component {
-
+	constructor(props) {
+		super(props);
+		this.getArrow = this.getArrow.bind(this);
+		this.getStepPosition = this.getStepPosition.bind(this);
+	}
 	shouldComponentUpdate(nextProps) {
 		return this.props.step !== nextProps.step || this.props.active !== nextProps.active;
 	}
@@ -38,7 +40,7 @@ export default class ReactUserTour extends Component {
 			positioned = "left";
 		}
 		else if (shouldPositionAbove) {
-			top = top - tourElHeight - ARROW_SIZE;
+			top = top - tourElHeight - this.props.arrowSize;
 			if (shouldPositionLeft) {
 				left = (position.left + 25) - tourElWidth;
 				positioned = "topLeft";
@@ -50,7 +52,7 @@ export default class ReactUserTour extends Component {
 		}
 
 		else if (shouldPositionBelow) {
-			top = top + el.offsetHeight + ARROW_SIZE;
+			top = top + el.offsetHeight + this.props.arrowSize;
 			if (shouldPositionLeft) {
 				left = (position.left + 25) - tourElWidth;
 				positioned = "bottomLeft";
@@ -72,27 +74,27 @@ export default class ReactUserTour extends Component {
 		let arrowStyle;
 		switch (position) {
 			case "left":
-				arrowStyle = arrowRight;
+				arrowStyle = arrowRight({size: this.props.arrowSize, color: this.props.arrowColor});
 				arrowStyle.left = width;
 				break;
 			case "right":
-				arrowStyle = arrowLeft;
+				arrowStyle = arrowLeft({size: this.props.arrowSize, color: this.props.arrowColor});
 				break;
 			case "top":
-				arrowStyle = arrowDown;
+				arrowStyle = arrowDown({size: this.props.arrowSize, color: this.props.arrowColor});
 				arrowStyle.top = height;
 				break;
 			case "topLeft":
-				arrowStyle = Object.assign({}, arrowDown);
+				arrowStyle = arrowDown({size: this.props.arrowSize, color: this.props.arrowColor});
 				arrowStyle.top = height;
-				arrowStyle.left = (width - 20) - ARROW_SIZE;
+				arrowStyle.left = (width - 20) - this.props.arrowSize;
 				break;
 			case "bottom":
-				arrowStyle = arrowUp;
+				arrowStyle = arrowUp({size: this.props.arrowSize, color: this.props.arrowColor});
 				break;
 			case "bottomLeft":
-				arrowStyle = Object.assign({}, arrowUp);
-				arrowStyle.left = (width - 20) - ARROW_SIZE;
+				arrowStyle = arrowUp({size: this.props.arrowSize, color: this.props.arrowColor});
+				arrowStyle.left = (width - 20) - this.props.arrowSize;
 				break;
 			default:
 				arrowStyle = {};
@@ -179,4 +181,6 @@ ReactUserTour.defaultProps = {
 	},
 	hideButtons: false,
 	hideClose: false,
+	arrowColor: "#fff",
+	arrowSize: 15
 };

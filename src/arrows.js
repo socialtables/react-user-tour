@@ -1,37 +1,45 @@
-export const arrowUp = {
-	width: "0px",
-	height: "0px",
-	borderLeft: "15px solid transparent",
-	borderRight: "15px solid transparent",
-	borderBottom: "15px solid #fff",
-	position: "absolute",
-	top: -15
+export const arrowUp = ({color, size}) => {
+	return {
+		width: "0px",
+		height: "0px",
+		borderLeft: `${size}px solid transparent`,
+		borderRight: `${size}px solid transparent`,
+		borderBottom: `${size}px solid ${color}`,
+		position: "absolute",
+		top: -15
+	};
 };
 
-export const arrowDown = {
-	width: "0px",
-	height: "0px",
-	borderLeft: "15px solid transparent",
-	borderRight: "15px solid transparent",
-	borderTop: "15px solid #fff",
-	position: "absolute"
+export const arrowDown = ({color, size}) => {
+	return {
+		width: "0px",
+		height: "0px",
+		borderLeft: `${size}px solid transparent`,
+		borderRight: `${size}px solid transparent`,
+		borderTop: `${size}px solid ${color}`,
+		position: "absolute"
+	};
 };
 
-export const arrowRight = {
-	width: "0px",
-	height: "0px",
-	borderTop: "15px solid transparent",
-	borderBottom: "15px solid transparent",
-	borderLeft: "15px solid #fff",
-	position: "absolute"
+export const arrowRight = ({color, size}) => {
+	return {
+		width: "0px",
+		height: "0px",
+		borderTop: `${size} solid transparent`,
+		borderBottom: `${size}px solid transparent`,
+		borderLeft: `${size}px solid ${color}`,
+		position: "absolute"
+	};
 };
 
-export const arrowLeft = {
-	width: "0px",
-	height: "0px",
-	borderTop: "15px solid transparent",
-	borderBottom: "15px solid transparent",
-	borderRight: "15px solid #fff",
-	position: "absolute",
-	left: -15
+export const arrowLeft = ({color, size}) => {
+	return {
+		width: "0px",
+		height: "0px",
+		borderTop: `${size}px solid transparent`,
+		borderBottom: `${size}px solid transparent`,
+		borderRight: `${size}px solid ${color}`,
+		position: "absolute",
+		left: -15
+	};
 };

@@ -39,6 +39,12 @@ Optional style object for the container div around the buttons.
 #### `arrow`
 We provide an arrow that points to the selector, but you may optionally pass in your own React element in the place of the arrow provided.
 
+#### `arrowSize`
+If you choose to use the provided arrow, you can set the pixel size here with an integer value.
+
+#### `arrowColor`
+If you choose to use the provided arrow, you can set the color here by passing in a hex value.
+
 #### `nextButtonText`
 Text that will appear on the button that moves the tour forward. Defaults to `Next`
 
