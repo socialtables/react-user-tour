@@ -16,10 +16,10 @@ A boolean value representing whether or not the tour should currently be display
 An integer representing the current active step of the tour
 
 #### `onNext`
-function that fires when user clicks the Next button. Receives the next step integer as a callback. For example, if current step is 1 and user clicks the Next button, onNext(2) will be called.
+function that fires when user clicks the Next button. Receives the next step integer as a callback. For example, if current step is 1 and user clicks the Next button, `onNext(2)` will be called.
 
 #### `onBack`
-function that fires when user clicks the Back button. Receives the previous step integer as a callback. For example, if current step is 2 and user clicks the Back button, onBack(1) will be called.
+function that fires when user clicks the Back button. Receives the previous step integer as a callback. For example, if current step is 2 and user clicks the Back button, `onBack(1)` will be called.
 
 #### `onCancel`
 function that fires when user clicks the X button or the Done Button.
@@ -86,14 +86,14 @@ export default class UserTour extends Component {
 						{
 							step: 1,
 							selector: ".my-fun-website",
-							title: <div style={tourTitleStyle}>My Web</div>,
-							body: <div style={tourMessageStyle}>Site</div>
+							title: <div style={{color: "blue"}}>My Web</div>,
+							body: <div style={{color: "green"}}>Site</div>
 						},
 						{
 							step: 2,
 							selector: ".my-website-is-amazing",
-							title: <div style={tourTitleStyle}>Wow</div>,
-							body: <div style={tourMessageStyle}>so good</div>
+							title: <div style={{color: "blue"}}>Wow</div>,
+							body: <div style={{color: "yellow"}}>so good</div>
 						}
 					]}
 				/>
