@@ -25,7 +25,7 @@ export const arrowRight = ({color, size}) => {
 	return {
 		width: "0px",
 		height: "0px",
-		borderTop: `${size} solid transparent`,
+		borderTop: `${size}px solid transparent`,
 		borderBottom: `${size}px solid transparent`,
 		borderLeft: `${size}px solid ${color}`,
 		position: "absolute"
