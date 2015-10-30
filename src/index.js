@@ -125,7 +125,7 @@ export default class ReactUserTour extends Component {
 		let tourButtonContainer;
 		if (!this.props.hideButtons) {
 			tourButtonContainer = (
-				<div className="react-user-tour-button-container">
+				<div className="react-user-tour-button-container" style={this.props.buttonContainerStyle}>
 					{nextButton}
 					{doneButton}
 					{backButton}
@@ -160,8 +160,8 @@ export default class ReactUserTour extends Component {
 
 ReactUserTour.defaultProps = {
 	style: {
-		height: 100,
-		width: 300,
+		height: 150,
+		width: 350,
 		position: "absolute",
 		zIndex: 9999,
 		backgroundColor: "#fff",
@@ -174,6 +174,9 @@ ReactUserTour.defaultProps = {
 	nextButtonText: "Next",
 	backButtonText: "Back",
 	doneButtonText: "Done",
+	buttonContainerStyle: {
+		paddingTop: "15%"
+	},
 	hideButtons: false,
-	hideClose: false
+	hideClose: false,
 };
