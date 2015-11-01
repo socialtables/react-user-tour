@@ -6,7 +6,7 @@ export const arrowUp = ({color, size}) => {
 		borderRight: `${size}px solid transparent`,
 		borderBottom: `${size}px solid ${color}`,
 		position: "absolute",
-		top: -15
+		top: `-${size}px`
 	};
 };
 
@@ -40,6 +40,6 @@ export const arrowLeft = ({color, size}) => {
 		borderBottom: `${size}px solid transparent`,
 		borderRight: `${size}px solid ${color}`,
 		position: "absolute",
-		left: -15
+		left: `-${size}px`
 	};
 };

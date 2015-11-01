@@ -87,14 +87,14 @@ export default class ReactUserTour extends Component {
 			case "topLeft":
 				arrowStyle = arrowDown({size: this.props.arrowSize, color: this.props.arrowColor});
 				arrowStyle.top = height;
-				arrowStyle.left = (width - 20) - this.props.arrowSize;
+				arrowStyle.left = width - (this.props.arrowSize * 2);
 				break;
 			case "bottom":
 				arrowStyle = arrowUp({size: this.props.arrowSize, color: this.props.arrowColor});
 				break;
 			case "bottomLeft":
 				arrowStyle = arrowUp({size: this.props.arrowSize, color: this.props.arrowColor});
-				arrowStyle.left = (width - 20) - this.props.arrowSize;
+				arrowStyle.left = width - (this.props.arrowSize * 2);
 				break;
 			default:
 				arrowStyle = {};
