@@ -25,7 +25,7 @@ function that fires when user clicks the Back button. Receives the previous step
 function that fires when user clicks the X button or the Done Button.
 
 #### `steps`
-An array of steps. Each step object takes: step (integer), selector (css selector to be passed to document.querySelector()), title (a react element representing the header of the current step), and body (a react element representing the main body message of the tour step).
+An array of steps. Each step object takes: step (integer), selector (css selector to be passed to document.querySelector()), title (a react element representing the header of the current step), and body (a react element representing the main body message of the tour step). Each step can also take an optional argument, `position` which will ovveride the position of the tour component in relation to the selector that is determined by the app. Valid arguments for the position step are `left` , `right`, `top`, `topLeft`, `bottom`, and `bottomLeft`.
 
 #### `style`
 Optional style object.
