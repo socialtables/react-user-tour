@@ -36,7 +36,7 @@ export default class ReactUserTour extends Component {
 		const shouldPositionAbove = windowHeight - position.bottom < 100;
 		const shouldPositionBelow = position.top < 50;
 		let elPos;
-		if(overridePos && positions[overridePos]) {
+		if (overridePos && positions[overridePos]) {
 			elPos = positions[overridePos]({
 				position,
 				tourElWidth,
