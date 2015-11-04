@@ -3,18 +3,21 @@ import {Motion, spring} from "react-motion";
 
 import TourButton from "./tour-button";
 import { arrowUp, arrowDown, arrowLeft, arrowRight } from "./arrows";
+import positions from "./position-helpers";
 
 export default class ReactUserTour extends Component {
+
 	constructor(props) {
 		super(props);
 		this.getArrow = this.getArrow.bind(this);
 		this.getStepPosition = this.getStepPosition.bind(this);
 	}
+
 	shouldComponentUpdate(nextProps) {
 		return this.props.step !== nextProps.step || this.props.active !== nextProps.active;
 	}
 
-	getStepPosition(selector, tourElWidth, tourElHeight) {
+	getStepPosition(selector, tourElWidth, tourElHeight, overridePos) {
 		const windowHeight = window.innerHeight;
 		const windowWidth = window.innerWidth;
 		const el = document.querySelector(selector);
@@ -32,42 +35,50 @@ export default class ReactUserTour extends Component {
 		const shouldPositionLeft = windowWidth - position.left < (windowWidth / 2);
 		const shouldPositionAbove = windowHeight - position.bottom < 100;
 		const shouldPositionBelow = position.top < 50;
-		let left = position.right + 25;
-		let top = position.top + window.pageYOffset;
-		let positioned = "right";
-		if (shouldPositionLeft && !shouldPositionAbove && !shouldPositionBelow) {
-			left = (position.left - 25) - tourElWidth;
-			positioned = "left";
+		let elPos;
+		if(overridePos) {
+			elPos = positions[overridePos]({
+				position,
+				tourElWidth,
+				tourElHeight,
+				arrowSize: this.props.arrowSize,
+				offsetHeight: el.offsetHeight
+			});
+		}
+		else if (shouldPositionLeft && !shouldPositionAbove && !shouldPositionBelow) {
+			elPos = positions.left({position, tourElWidth});
 		}
 		else if (shouldPositionAbove) {
-			top = top - tourElHeight - this.props.arrowSize;
-			if (shouldPositionLeft) {
-				left = (position.left + 25) - tourElWidth;
-				positioned = "topLeft";
-			}
-			else {
-				left = position.left;
-				positioned = "top";
-			}
+			elPos = shouldPositionLeft ? positions.topLeft({
+				position, 
+				tourElWidth, 
+				tourElHeight, 
+				arrowSize: this.props.arrowSize
+			}) : 
+			positions.top({
+				position, 
+				tourElHeight, 
+				arrowSize: this.props.arrowSize			
+			});
 		}
-
 		else if (shouldPositionBelow) {
-			top = top + el.offsetHeight + this.props.arrowSize;
-			if (shouldPositionLeft) {
-				left = (position.left + 25) - tourElWidth;
-				positioned = "bottomLeft";
-			}
-			else {
-				left = position.left;
-				positioned = "bottom";
-			}
+			elPos = shouldPositionLeft ? positions.bottomLeft({
+				position,
+				tourElWidth,
+				arrowSize: this.props.arrowSize,
+				offsetHeight: el.offsetHeight
+			}) : 
+			positions.bottom({
+				position,
+				arrowSize: this.props.arrowSize,
+				offsetHeight: el.offsetHeight
+			});
 		}
-
-		return {
-			top: top,
-			left: left,
-			positioned: positioned
-		};
+		else {
+			elPos = positions.right({position});
+		}
+		console.log(elPos);
+		return elPos;
 	}
 
 	getArrow(position, width, height) {
@@ -177,7 +188,9 @@ ReactUserTour.defaultProps = {
 	backButtonText: "Back",
 	doneButtonText: "Done",
 	buttonContainerStyle: {
-		paddingTop: "15%"
+		position: "absolute",
+		bottom: 10,
+		right: 0
 	},
 	hideButtons: false,
 	hideClose: false,
