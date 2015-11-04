@@ -77,7 +77,6 @@ export default class ReactUserTour extends Component {
 		else {
 			elPos = positions.right({position});
 		}
-		console.log(elPos);
 		return elPos;
 	}
 
@@ -118,7 +117,12 @@ export default class ReactUserTour extends Component {
 		if (!this.props.active || !currentTourStep) {
 			return <span />;
 		}
-		const position = this.getStepPosition(currentTourStep.selector, this.props.style.width, this.props.style.height);
+		const position = this.getStepPosition(
+			currentTourStep.selector, 
+			this.props.style.width, 
+			this.props.style.height, 
+			currentTourStep.position
+		);
 		const style = Object.assign({}, this.props.style);
 		const arrow = this.props.arrow || this.getArrow(position.positioned, this.props.style.width, this.props.style.height);
 
