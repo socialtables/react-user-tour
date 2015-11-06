@@ -29,7 +29,7 @@ class Demo extends Component {
 			paddingLeft: 10
 		};
 		return (
-			<div>
+			<div style={{fontFamily: "Lucida Sans Unicode"}}>
 				<div
 					style={{width: 200, height: 25, left: 0, top: 0, position: "absolute", backgroundColor: "blanchedalmond", textAlign: "center", paddingTop: 10, fontWeight: 700, cursor: "pointer"}}
 					onClick={() => this.setState({isTourActive: true, tourStep: 1})}
@@ -132,6 +132,11 @@ class Demo extends Component {
 						onNext={(step) => this.setState({tourStep: step})}
 						onBack={(step) => this.setState({tourStep: step})}
 						onCancel={() => this.setState({isTourActive: false})}
+						buttonContainerStyle={{
+							position: "absolute",
+							bottom: 10,
+							right: 0
+						}}
 						steps={[
 							{
 								step: 1,
