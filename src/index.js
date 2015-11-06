@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import {Motion, spring} from "react-motion";
+import scrollTo from "scroll-to";
 
 import TourButton from "./tour-button";
 import { arrowUp, arrowDown, arrowLeft, arrowRight } from "./arrows";
@@ -25,11 +26,17 @@ export default class ReactUserTour extends Component {
 		const isElementCompletelyBelowViewBox = windowHeight - position.top < 0;
 		const isElementCompletelyAboveViewBox = position.bottom < 0;
 		if (isElementCompletelyBelowViewBox) {
-			window.scrollTo(0, position.bottom);
+			scrollTo(0, position.bottom, {
+			  ease: "out-sine",
+			  duration: 500
+			});
 			position = el.getBoundingClientRect();
 		}
 		else if (isElementCompletelyAboveViewBox) {
-			window.scrollTo(0, window.pageYOffset + position.top);
+			scrollTo(0, window.pageYOffset + position.top, {
+			  ease: "out-sine",
+			  duration: 500
+			});
 			position = el.getBoundingClientRect();
 		}
 		const shouldPositionLeft = windowWidth - position.left < (windowWidth / 2);
@@ -50,15 +57,15 @@ export default class ReactUserTour extends Component {
 		}
 		else if (shouldPositionAbove) {
 			elPos = shouldPositionLeft ? positions.topLeft({
-				position, 
-				tourElWidth, 
-				tourElHeight, 
+				position,
+				tourElWidth,
+				tourElHeight,
 				arrowSize: this.props.arrowSize
-			}) : 
+			}) :
 			positions.top({
-				position, 
-				tourElHeight, 
-				arrowSize: this.props.arrowSize			
+				position,
+				tourElHeight,
+				arrowSize: this.props.arrowSize
 			});
 		}
 		else if (shouldPositionBelow) {
@@ -67,7 +74,7 @@ export default class ReactUserTour extends Component {
 				tourElWidth,
 				arrowSize: this.props.arrowSize,
 				offsetHeight: el.offsetHeight
-			}) : 
+			}) :
 			positions.bottom({
 				position,
 				arrowSize: this.props.arrowSize,
@@ -118,9 +125,9 @@ export default class ReactUserTour extends Component {
 			return <span />;
 		}
 		const position = this.getStepPosition(
-			currentTourStep.selector, 
-			this.props.style.width, 
-			this.props.style.height, 
+			currentTourStep.selector,
+			this.props.style.width,
+			this.props.style.height,
 			currentTourStep.position
 		);
 		const style = Object.assign({}, this.props.style);
