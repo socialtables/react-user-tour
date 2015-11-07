@@ -42,135 +42,136 @@ const throwNoClass = (dom, className) => {
 	TestUtils.findRenderedDOMComponentWithClass(dom, className);
 }
 
-test("is React Component", (assert) => {
-	const component = <Tour {...props} />
+const node = document.createElement("div");
+const renderComponent = (component) => ReactDOM.render(component, node);
 
-	const result = TestUtils.renderIntoDocument(component);
+
+test("is React Component", (assert) => {
+	const component = <Tour {...props} />;
 	assert.ok(TestUtils.isElement(component), "ReactUserTour is a react component");
-	ReactDOM.unmountComponentAtNode(ReactDOM.findDOMNode(result));
 	assert.end();
 });
 
 test("should return a single span if active is false", (assert) => {
 	const component = <Tour {...props} active={false} />
-	const result = TestUtils.renderIntoDocument(component);
-	assert.ok(TestUtils.findRenderedDOMComponentWithTag(result, "span"));
-	ReactDOM.unmountComponentAtNode(ReactDOM.findDOMNode(result));
+	const result = renderComponent(component);
+	assert.ok(TestUtils.findRenderedDOMComponentWithTag(result, "span"), "when active is a false a span is returned");
+	ReactDOM.unmountComponentAtNode(node);
 	assert.end();
 });
 
 test("should have the container className if active is true", (assert) => {
 	const component = <Tour {...props} />
-	const result = TestUtils.renderIntoDocument(component);
-	assert.ok(TestUtils.findRenderedDOMComponentWithClass(result, "react-user-tour-container"));
-	ReactDOM.unmountComponentAtNode(ReactDOM.findDOMNode(result));
+	const result = renderComponent(component);
+	assert.ok(TestUtils.findRenderedDOMComponentWithClass(result, "react-user-tour-container"), "container element exists");
+	ReactDOM.unmountComponentAtNode(node);
 	assert.end();
 });
 
 test("should have a next button but no back or done button when step is 1 and there are 3 steps", (assert) => {
 	const component = <Tour {...props} />
-	const result = TestUtils.renderIntoDocument(component);
-	assert.ok(TestUtils.findRenderedDOMComponentWithClass(result, "react-user-tour-next-button"));
+	const result = renderComponent(component);
+	assert.ok(TestUtils.findRenderedDOMComponentWithClass(result, "react-user-tour-next-button"), "nexxt button exists");
 	assert.throws(() => throwNoClass(result, "react-user-tour-back-button"), /found: 0/);
 	assert.throws(() => throwNoClass(result, "react-user-tour-done-button"), /found: 0/);
-	ReactDOM.unmountComponentAtNode(ReactDOM.findDOMNode(result));
+	ReactDOM.unmountComponentAtNode(node);
 	assert.end();
 });
 
 test("should have a next button and a back button but no done button when step is 2 and there are 3 steps", (assert) => {
 	const component = <Tour {...props} step={2} />
-	const result = TestUtils.renderIntoDocument(component);
-	assert.ok(TestUtils.findRenderedDOMComponentWithClass(result, "react-user-tour-next-button"));
-	assert.ok(TestUtils.findRenderedDOMComponentWithClass(result, "react-user-tour-back-button"));
+	const result = renderComponent(component);
+	assert.ok(TestUtils.findRenderedDOMComponentWithClass(result, "react-user-tour-next-button"), "next button exists");
+	assert.ok(TestUtils.findRenderedDOMComponentWithClass(result, "react-user-tour-back-button"), "back button exists");
 	assert.throws(() => throwNoClass(result, "react-user-tour-done-button"), /found: 0/);
-	ReactDOM.unmountComponentAtNode(ReactDOM.findDOMNode(result));
+	ReactDOM.unmountComponentAtNode(node);
 	assert.end();
 });
 
 test("should have a back button and a done button but no next button when step is 3 and there are 3 steps", (assert) => {
 	const component = <Tour {...props} step={3} />
-	const result = TestUtils.renderIntoDocument(component);
-	assert.ok(TestUtils.findRenderedDOMComponentWithClass(result, "react-user-tour-done-button"));
-	assert.ok(TestUtils.findRenderedDOMComponentWithClass(result, "react-user-tour-back-button"));
+	const result = renderComponent(component);
+	assert.ok(TestUtils.findRenderedDOMComponentWithClass(result, "react-user-tour-done-button"), "done button exists");
+	assert.ok(TestUtils.findRenderedDOMComponentWithClass(result, "react-user-tour-back-button"), "back button exists");
 	assert.throws(() => throwNoClass(result, "react-user-tour-next-button"), /found: 0/);
-	ReactDOM.unmountComponentAtNode(ReactDOM.findDOMNode(result));
+	ReactDOM.unmountComponentAtNode(node);
 	assert.end();
 });
 
 test("should return a single span if the passed in step does not exist in the steps prop", (assert) => {
 	const component = <Tour {...props} step={10} />
-	const result = TestUtils.renderIntoDocument(component);
-	assert.ok(TestUtils.findRenderedDOMComponentWithTag(result, "span"));
-	ReactDOM.unmountComponentAtNode(ReactDOM.findDOMNode(result));
+	const result = renderComponent(component);
+	assert.ok(TestUtils.findRenderedDOMComponentWithTag(result, "span"), "returns span");
+	ReactDOM.unmountComponentAtNode(node);
 	assert.end();
 });
 
 test("should have a default arrow that will point to selected dom class if no arrow prop is passed in", (assert) => {
 	const component = <Tour {...props} step={3} />
-	const result = TestUtils.renderIntoDocument(component);
-	assert.ok(TestUtils.findRenderedDOMComponentWithClass(result, "react-user-tour-arrow"));
-	ReactDOM.unmountComponentAtNode(ReactDOM.findDOMNode(result));
+	const result = renderComponent(component);
+	assert.ok(TestUtils.findRenderedDOMComponentWithClass(result, "react-user-tour-arrow"), "arrow exists");
+	ReactDOM.unmountComponentAtNode(node);
 	assert.end();
 });
 
 test("should not have a default arrow that will point to selected dom class if an arrow prop is passed in", (assert) => {
 	const component = <Tour {...props} step={3} arrow={<span />}/>
-	const result = TestUtils.renderIntoDocument(component);
+	const result = renderComponent(component);
 	assert.throws(() => throwNoClass(result, "react-user-tour-arrow"));
-	ReactDOM.unmountComponentAtNode(ReactDOM.findDOMNode(result));
+	ReactDOM.unmountComponentAtNode(node);
 	assert.end();
 });
 
 test("should not any buttons or the associated button container if hideButtons is true", (assert) => {
 	const component = <Tour {...props} step={3} hideButtons={true}/>
-	const result = TestUtils.renderIntoDocument(component);
+	const result = renderComponent(component);
 	assert.throws(() => throwNoClass(result, "react-user-tour-button-container"));
-	ReactDOM.unmountComponentAtNode(ReactDOM.findDOMNode(result));
+	ReactDOM.unmountComponentAtNode(node);
 	assert.end();
 });
 
 test("onNext should be called once when the user clicks the next button", (assert) => {
 	const component = <Tour {...props} />
-	const result = TestUtils.renderIntoDocument(component);
+	const result = renderComponent(component);
 	const nextButton = TestUtils.findRenderedDOMComponentWithClass(result, "react-user-tour-next-button");
 	TestUtils.Simulate.click(nextButton);
-	assert.ok(onNext.calledOnce);
-	ReactDOM.unmountComponentAtNode(ReactDOM.findDOMNode(result));
+	assert.ok(onNext.calledOnce, "onNext function called once");
+	ReactDOM.unmountComponentAtNode(node);
 	assert.end();
 });
 
 test("onBack should be called once when the user clicks the back button", (assert) => {
 	const component = <Tour {...props} step={2}/>
-	const result = TestUtils.renderIntoDocument(component);
+	const result = renderComponent(component);
 	const backButton = TestUtils.findRenderedDOMComponentWithClass(result, "react-user-tour-back-button");
 	TestUtils.Simulate.click(backButton);
-	assert.ok(onBack.calledOnce);
-	ReactDOM.unmountComponentAtNode(ReactDOM.findDOMNode(result));
+	assert.ok(onBack.calledOnce, "onBack function called once");
+	ReactDOM.unmountComponentAtNode(node);
 	assert.end();
 });
 
 test("onCancel should be called once when the user clicks the done button", (assert) => {
 	const component = <Tour {...props} step={3}/>
-	const result = TestUtils.renderIntoDocument(component);
+	const result = renderComponent(component);
 	const doneButton = TestUtils.findRenderedDOMComponentWithClass(result, "react-user-tour-done-button");
 	TestUtils.Simulate.click(doneButton);
-	assert.ok(onCancel.calledOnce);
-	ReactDOM.unmountComponentAtNode(ReactDOM.findDOMNode(result));
+	assert.ok(onCancel.calledOnce, "onCancel called once");
+	ReactDOM.unmountComponentAtNode(node);	
 	assert.end();
 });
 
 test("the close button should be there if hideClose is not true", (assert) => {
 	const component = <Tour {...props} step={3}/>
-	const result = TestUtils.renderIntoDocument(component);
-	assert.ok(TestUtils.findRenderedDOMComponentWithClass(result, "react-user-tour-close"));
-	ReactDOM.unmountComponentAtNode(ReactDOM.findDOMNode(result));
+	const result = renderComponent(component);
+	assert.ok(TestUtils.findRenderedDOMComponentWithClass(result, "react-user-tour-close"), "close button exists");
+	ReactDOM.unmountComponentAtNode(node);
 	assert.end();
 });
 
 test("the close button should not be there if hideClose is true", (assert) => {
 	const component = <Tour {...props} step={3}/>
-	const result = TestUtils.renderIntoDocument(component);
+	const result = renderComponent(component);
 	assert.throws(() => throwNoClass("react-user-tour-close"));
-	ReactDOM.unmountComponentAtNode(ReactDOM.findDOMNode(result));
+	ReactDOM.unmountComponentAtNode(node);
 	assert.end();
 })
