@@ -10,6 +10,10 @@ export default class ReactUserTour extends Component {
 
 	constructor(props) {
 		super(props);
+		this.prevPos = {
+			top: 0, 
+			left: 0
+		};
 		this.getArrow = this.getArrow.bind(this);
 		this.getStepPosition = this.getStepPosition.bind(this);
 	}
@@ -22,69 +26,75 @@ export default class ReactUserTour extends Component {
 		const windowHeight = window.innerHeight;
 		const windowWidth = window.innerWidth;
 		const el = document.querySelector(selector);
-		let position = el ? el.getBoundingClientRect() : {};
-		const isElementCompletelyBelowViewBox = windowHeight - position.top < 0;
-		const isElementCompletelyAboveViewBox = position.bottom < 0;
-		if (isElementCompletelyBelowViewBox) {
-			scrollTo(0, position.bottom, {
-			  ease: "out-sine",
-			  duration: 500
-			});
-			position = el.getBoundingClientRect();
-		}
-		else if (isElementCompletelyAboveViewBox) {
-			scrollTo(0, window.pageYOffset + position.top, {
-			  ease: "out-sine",
-			  duration: 500
-			});
-			position = el.getBoundingClientRect();
-		}
-		const shouldPositionLeft = windowWidth - position.left < (windowWidth / 2);
-		const shouldPositionAbove = windowHeight - position.bottom < 100;
-		const shouldPositionBelow = position.top < 50;
-		let elPos;
-		if (overridePos && positions[overridePos]) {
-			elPos = positions[overridePos]({
-				position,
-				tourElWidth,
-				tourElHeight,
-				arrowSize: this.props.arrowSize,
-				offsetHeight: el.offsetHeight
-			});
-		}
-		else if (shouldPositionLeft && !shouldPositionAbove && !shouldPositionBelow) {
-			elPos = positions.left({position, tourElWidth});
-		}
-		else if (shouldPositionAbove) {
-			elPos = shouldPositionLeft ? positions.topLeft({
-				position,
-				tourElWidth,
-				tourElHeight,
-				arrowSize: this.props.arrowSize
-			}) :
-			positions.top({
-				position,
-				tourElHeight,
-				arrowSize: this.props.arrowSize
-			});
-		}
-		else if (shouldPositionBelow) {
-			elPos = shouldPositionLeft ? positions.bottomLeft({
-				position,
-				tourElWidth,
-				arrowSize: this.props.arrowSize,
-				offsetHeight: el.offsetHeight
-			}) :
-			positions.bottom({
-				position,
-				arrowSize: this.props.arrowSize,
-				offsetHeight: el.offsetHeight
-			});
+		if (el) {
+			let position = el ? el.getBoundingClientRect() : {};
+			const isElementCompletelyBelowViewBox = windowHeight - position.top < 0;
+			const isElementCompletelyAboveViewBox = position.bottom < 0;
+			if (isElementCompletelyBelowViewBox) {
+				scrollTo(0, position.bottom, {
+				  ease: "out-sine",
+				  duration: 500
+				});
+				position = el.getBoundingClientRect();
+			}
+			else if (isElementCompletelyAboveViewBox) {
+				scrollTo(0, window.pageYOffset + position.top, {
+				  ease: "out-sine",
+				  duration: 500
+				});
+				position = el.getBoundingClientRect();
+			}
+			const shouldPositionLeft = windowWidth - position.left < (windowWidth / 2);
+			const shouldPositionAbove = windowHeight - position.bottom < 100;
+			const shouldPositionBelow = position.top < 50;
+			let elPos;
+			if (overridePos && positions[overridePos]) {
+				elPos = positions[overridePos]({
+					position,
+					tourElWidth,
+					tourElHeight,
+					arrowSize: this.props.arrowSize,
+					offsetHeight: el.offsetHeight
+				});
+			}
+			else if (shouldPositionLeft && !shouldPositionAbove && !shouldPositionBelow) {
+				elPos = positions.left({position, tourElWidth});
+			}
+			else if (shouldPositionAbove) {
+				elPos = shouldPositionLeft ? positions.topLeft({
+					position,
+					tourElWidth,
+					tourElHeight,
+					arrowSize: this.props.arrowSize
+				}) :
+				positions.top({
+					position,
+					tourElHeight,
+					arrowSize: this.props.arrowSize
+				});
+			}
+			else if (shouldPositionBelow) {
+				elPos = shouldPositionLeft ? positions.bottomLeft({
+					position,
+					tourElWidth,
+					arrowSize: this.props.arrowSize,
+					offsetHeight: el.offsetHeight
+				}) :
+				positions.bottom({
+					position,
+					arrowSize: this.props.arrowSize,
+					offsetHeight: el.offsetHeight
+				});
+			}
+			else {
+				elPos = positions.right({position});
+			}
+			this.prevPos = elPos;
+			return elPos;
 		}
 		else {
-			elPos = positions.right({position});
+			return this.prevPos;
 		}
-		return elPos;
 	}
 
 	getArrow(position, width, height) {
