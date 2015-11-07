@@ -1,14 +1,12 @@
-import React, { Component } from "react";
+import React from "react";
 
-export default class TourButton extends Component {
-	render() {
-		return (
-			<div style={this.props.style} onClick={this.props.onClick} {...this.props}>
-				{this.props.children}
-			</div>
-		);
-	}
-}
+const TourButton = (props) => {
+	return (
+		<div style={props.style} onClick={props.onClick} {...props}>
+			{props.children}
+		</div>
+	);
+};
 
 TourButton.defaultProps = {
 	style: {
@@ -26,3 +24,5 @@ TourButton.defaultProps = {
 	},
 	onClick: () => {}
 };
+
+export default TourButton;
