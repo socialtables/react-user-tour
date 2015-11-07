@@ -3,7 +3,8 @@ import {Motion, spring} from "react-motion";
 import scrollTo from "scroll-to";
 
 import TourButton from "./tour-button";
-import { arrowUp, arrowDown, arrowLeft, arrowRight } from "./arrows";
+import TourButtonContainer from "./tour-button-container";
+import Arrow from "./arrow";
 import positions from "./position-helpers";
 
 export default class ReactUserTour extends Component {
@@ -14,7 +15,6 @@ export default class ReactUserTour extends Component {
 			top: 0, 
 			left: 0
 		};
-		this.getArrow = this.getArrow.bind(this);
 		this.getStepPosition = this.getStepPosition.bind(this);
 	}
 
@@ -97,38 +97,6 @@ export default class ReactUserTour extends Component {
 		}
 	}
 
-	getArrow(position, width, height) {
-		let arrowStyle;
-		switch (position) {
-			case "left":
-				arrowStyle = arrowRight({size: this.props.arrowSize, color: this.props.arrowColor});
-				arrowStyle.left = width;
-				break;
-			case "right":
-				arrowStyle = arrowLeft({size: this.props.arrowSize, color: this.props.arrowColor});
-				break;
-			case "top":
-				arrowStyle = arrowDown({size: this.props.arrowSize, color: this.props.arrowColor});
-				arrowStyle.top = height;
-				break;
-			case "topLeft":
-				arrowStyle = arrowDown({size: this.props.arrowSize, color: this.props.arrowColor});
-				arrowStyle.top = height;
-				arrowStyle.left = width - (this.props.arrowSize * 2);
-				break;
-			case "bottom":
-				arrowStyle = arrowUp({size: this.props.arrowSize, color: this.props.arrowColor});
-				break;
-			case "bottomLeft":
-				arrowStyle = arrowUp({size: this.props.arrowSize, color: this.props.arrowColor});
-				arrowStyle.left = width - (this.props.arrowSize * 2);
-				break;
-			default:
-				arrowStyle = {};
-		}
-		return <div className="react-user-tour-arrow" style={arrowStyle} />;
-	}
-
 	render() {
 		const currentTourStep = this.props.steps.filter(step => step.step === this.props.step)[0];
 		if (!this.props.active || !currentTourStep) {
@@ -141,31 +109,57 @@ export default class ReactUserTour extends Component {
 			currentTourStep.position
 		);
 		const style = Object.assign({}, this.props.style);
-		const arrow = this.props.arrow || this.getArrow(position.positioned, this.props.style.width, this.props.style.height);
+		const arrow = (
+			this.props.arrow || 
+			<Arrow
+				position={position.positioned}
+				width={this.props.style.width}
+				height={this.props.style.height}
+				size={this.props.arrowSize}
+				color={this.props.arrowColor}
+			/>
+		);
+	
+		const extraButtonProps = this.props.buttonStyle ? {style: this.props.buttonContainerStyle} : {};
 
-		let extraButtonProps = {};
-		if (this.props.buttonStyle) {
-			extraButtonProps.style = this.props.buttonStyle;
-		}
+		const nextButton = (
+			this.props.step !== this.props.steps.length ?
+				<TourButton 
+					onClick={() => this.props.onNext(this.props.step + 1)} 
+					{...extraButtonProps} 
+					className="react-user-tour-next-button">
+						{this.props.nextButtonText}
+				</TourButton> : ""
+		);
 
-		const nextButton = this.props.step !== this.props.steps.length ?
-			<TourButton onClick={() => this.props.onNext(this.props.step + 1)} {...extraButtonProps} className="react-user-tour-next-button">{this.props.nextButtonText}</TourButton> : "";
+		const backButton = (
+			this.props.step !== 1 ?
+				<TourButton 
+					onClick={() => this.props.onBack(this.props.step - 1)} 
+					{...extraButtonProps} 
+					className="react-user-tour-back-button">
+						{this.props.backButtonText}
+				</TourButton> : ""
+		);
 
-		const backButton = this.props.step !== 1 ?
-			<TourButton onClick={() => this.props.onBack(this.props.step - 1)} {...extraButtonProps} className="react-user-tour-back-button">{this.props.backButtonText}</TourButton> : "";
+		const doneButton = (
+			this.props.step === this.props.steps.length ?
+				<TourButton 
+					onClick={() => this.props.onCancel()} 
+					{...extraButtonProps} 
+					className="react-user-tour-done-button">
+						{this.props.doneButtonText}
+				</TourButton> : ""
+		);
 
-		const doneButton = this.props.step === this.props.steps.length ?
-			<TourButton onClick={() => this.props.onCancel()} {...extraButtonProps} className="react-user-tour-done-button">{this.props.doneButtonText}</TourButton> : "";
-		let tourButtonContainer;
-		if (!this.props.hideButtons) {
-			tourButtonContainer = (
-				<div className="react-user-tour-button-container" style={this.props.buttonContainerStyle}>
+		const tourButtonContainer = (
+			!this.props.hideButtons ?
+				<TourButtonContainer style={this.props.buttonContainerStyle}>
 					{nextButton}
 					{doneButton}
 					{backButton}
-				</div>
-			);
-		}
+				</TourButtonContainer> : ""
+		);
 
 		const xStyle = {
 			"float": "right",
@@ -173,7 +167,16 @@ export default class ReactUserTour extends Component {
 			"paddingRight": 10,
 			"paddingTop": 10
 		};
-		const closeButton = this.props.hideClose ? "" : <span className="react-user-tour-close" style={xStyle} onClick={this.props.onCancel}>Close</span>;
+
+		const closeButton = (
+			!this.props.hideClose ? 
+				<span className="react-user-tour-close" 
+					style={xStyle} 
+					onClick={this.props.onCancel}>
+						Close
+				</span> : ""
+		);
+		
 		return (
 			<div className="react-user-tour-container">
 				<Motion style={{x: spring(position.left), y: spring(position.top)}}>
