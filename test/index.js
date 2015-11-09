@@ -156,7 +156,7 @@ test("onCancel should be called once when the user clicks the done button", (ass
 	const doneButton = TestUtils.findRenderedDOMComponentWithClass(result, "react-user-tour-done-button");
 	TestUtils.Simulate.click(doneButton);
 	assert.ok(onCancel.calledOnce, "onCancel called once");
-	ReactDOM.unmountComponentAtNode(node);	
+	ReactDOM.unmountComponentAtNode(node);
 	assert.end();
 });
 
@@ -172,6 +172,15 @@ test("the close button should not be there if hideClose is true", (assert) => {
 	const component = <Tour {...props} step={3}/>
 	const result = renderComponent(component);
 	assert.throws(() => throwNoClass("react-user-tour-close"));
+	ReactDOM.unmountComponentAtNode(node);
+	assert.end();
+})
+
+test("user can assign custom style to a button", (assert) => {
+	const component = <Tour {...props} buttonStyle={{color: "red"}} />
+	const result = renderComponent(component);
+	const button = TestUtils.findRenderedDOMComponentWithClass(result, "react-user-tour-next-button");
+	assert.ok(button.style.color === "red", "button color is red");
 	ReactDOM.unmountComponentAtNode(node);
 	assert.end();
 })

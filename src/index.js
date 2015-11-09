@@ -12,7 +12,7 @@ export default class ReactUserTour extends Component {
 	constructor(props) {
 		super(props);
 		this.prevPos = {
-			top: 0, 
+			top: 0,
 			left: 0
 		};
 		this.getStepPosition = this.getStepPosition.bind(this);
@@ -110,7 +110,7 @@ export default class ReactUserTour extends Component {
 		);
 		const style = Object.assign({}, this.props.style);
 		const arrow = (
-			this.props.arrow || 
+			this.props.arrow ||
 			<Arrow
 				position={position.positioned}
 				width={this.props.style.width}
@@ -119,14 +119,14 @@ export default class ReactUserTour extends Component {
 				color={this.props.arrowColor}
 			/>
 		);
-	
-		const extraButtonProps = this.props.buttonStyle ? {style: this.props.buttonContainerStyle} : {};
+
+		const extraButtonProps = this.props.buttonStyle ? {style: this.props.buttonStyle} : {};
 
 		const nextButton = (
 			this.props.step !== this.props.steps.length ?
-				<TourButton 
-					onClick={() => this.props.onNext(this.props.step + 1)} 
-					{...extraButtonProps} 
+				<TourButton
+					onClick={() => this.props.onNext(this.props.step + 1)}
+					{...extraButtonProps}
 					className="react-user-tour-next-button">
 						{this.props.nextButtonText}
 				</TourButton> : ""
@@ -134,9 +134,9 @@ export default class ReactUserTour extends Component {
 
 		const backButton = (
 			this.props.step !== 1 ?
-				<TourButton 
-					onClick={() => this.props.onBack(this.props.step - 1)} 
-					{...extraButtonProps} 
+				<TourButton
+					onClick={() => this.props.onBack(this.props.step - 1)}
+					{...extraButtonProps}
 					className="react-user-tour-back-button">
 						{this.props.backButtonText}
 				</TourButton> : ""
@@ -144,9 +144,9 @@ export default class ReactUserTour extends Component {
 
 		const doneButton = (
 			this.props.step === this.props.steps.length ?
-				<TourButton 
-					onClick={() => this.props.onCancel()} 
-					{...extraButtonProps} 
+				<TourButton
+					onClick={() => this.props.onCancel()}
+					{...extraButtonProps}
 					className="react-user-tour-done-button">
 						{this.props.doneButtonText}
 				</TourButton> : ""
@@ -169,14 +169,14 @@ export default class ReactUserTour extends Component {
 		};
 
 		const closeButton = (
-			!this.props.hideClose ? 
-				<span className="react-user-tour-close" 
-					style={xStyle} 
+			!this.props.hideClose ?
+				<span className="react-user-tour-close"
+					style={xStyle}
 					onClick={this.props.onCancel}>
 						Close
 				</span> : ""
 		);
-		
+
 		return (
 			<div className="react-user-tour-container">
 				<Motion style={{x: spring(position.left), y: spring(position.top)}}>
