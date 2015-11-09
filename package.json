@@ -10,6 +10,7 @@
   },
   "scripts": {
     "test": "npm run build && npm run lint &&  browserify test/index.js | tap-closer | smokestack -b firefox | tap-status",
+    "test-debug": "npm run build && npm run lint &&  browserify test/index.js | smokestack | tap-status",
     "lint": "./node_modules/.bin/eslint ./src",
     "build": "babel --plugins object-assign src --out-dir dist",
     "build-demo": "browserify demo/index.js -o demo/bundle.js",
