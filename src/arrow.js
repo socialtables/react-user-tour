@@ -1,5 +1,5 @@
 import React from "react";
-import { arrowUp, arrowDown, arrowLeft, arrowRight } from "./arrow-styles";
+import { arrowUp, arrowDown, arrowLeft, arrowRight } from "./helpers/arrow-styles";
 
 const Arrow = ({position, width, height, size, color}) => {
 	let arrowStyle;
