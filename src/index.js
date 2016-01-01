@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import {Motion, spring} from "react-motion";
-import scrollTo from "scroll-to";
-
 import TourButton from "./tour-button";
 import TourButtonContainer from "./tour-button-container";
 import Arrow from "./arrow";
-import positions from "./position-helpers";
+import positions from "./helpers/position-helpers";
+import * as viewBoxHelpers from "./helpers/viewbox-helpers";
+import scrollToPosition from "./helpers/scroll-to-position";
 
 export default class ReactUserTour extends Component {
 
@@ -28,25 +28,17 @@ export default class ReactUserTour extends Component {
 		const el = document.querySelector(selector);
 		if (el) {
 			let position = el ? el.getBoundingClientRect() : {};
-			const isElementCompletelyBelowViewBox = windowHeight - position.top < 0;
-			const isElementCompletelyAboveViewBox = position.bottom < 0;
-			if (isElementCompletelyBelowViewBox) {
-				scrollTo(0, position.bottom, {
-				  ease: "out-sine",
-				  duration: 500
-				});
-				position = el.getBoundingClientRect();
+			const isElementBelowViewBox = viewBoxHelpers.isElementBelowViewBox(windowHeight, position.top);
+			const isElementAboveViewBox = viewBoxHelpers.isElementBelowViewBox(position.bottom);
+			if (isElementBelowViewBox) {
+				position = scrollToPosition(el, position.bottom);
 			}
-			else if (isElementCompletelyAboveViewBox) {
-				scrollTo(0, window.pageYOffset + position.top, {
-				  ease: "out-sine",
-				  duration: 500
-				});
-				position = el.getBoundingClientRect();
+			else if (isElementAboveViewBox) {
+				position = scrollToPosition(el, window.pageYOffset + position.top);
 			}
-			const shouldPositionLeft = windowWidth - position.left < (windowWidth / 2);
-			const shouldPositionAbove = windowHeight - position.bottom < 100;
-			const shouldPositionBelow = position.top < 50;
+			const shouldPositionLeft = viewBoxHelpers.shouldPositionLeft(windowWidth, position.left);
+			const shouldPositionAbove = viewBoxHelpers.shouldPositionAbove(windowHeight, position.bottom);
+			const shouldPositionBelow = viewBoxHelpers.shouldPositionBelow(position.top);
 			let elPos;
 			if (overridePos && positions[overridePos]) {
 				elPos = positions[overridePos]({
@@ -108,7 +100,7 @@ export default class ReactUserTour extends Component {
 			this.props.style.height,
 			currentTourStep.position
 		);
-		const style = Object.assign({}, this.props.style);
+		const style = {...this.props.style};
 		const arrow = (
 			this.props.arrow ||
 			<Arrow
@@ -181,7 +173,8 @@ export default class ReactUserTour extends Component {
 			<div className="react-user-tour-container">
 				<Motion style={{x: spring(position.left), y: spring(position.top)}}>
 					{({x, y}) =>
-						<div style={Object.assign({}, style, {transform: `translate3d(${x}px, ${y}px, 0)`})}>
+
+						<div style={{...style, transform: `translate3d(${x}px, ${y}px, 0)`}}>
 							{arrow}
 							{closeButton}
 							{currentTourStep.title}
