@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {Motion, spring} from "react-motion";
+import { Motion, spring } from "react-motion";
 import TourButton from "./tour-button";
 import TourButtonContainer from "./tour-button-container";
 import Arrow from "./arrow";
@@ -29,7 +29,7 @@ export default class ReactUserTour extends Component {
 		if (el) {
 			let position = el ? el.getBoundingClientRect() : {};
 			const isElementBelowViewBox = viewBoxHelpers.isElementBelowViewBox(windowHeight, position.top);
-			const isElementAboveViewBox = viewBoxHelpers.isElementBelowViewBox(position.bottom);
+			const isElementAboveViewBox = viewBoxHelpers.isElementAboveViewBox(position.bottom);
 			if (isElementBelowViewBox) {
 				position = scrollToPosition(el, position.bottom);
 			}
