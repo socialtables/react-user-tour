@@ -25,6 +25,7 @@
     "lint": "./node_modules/.bin/eslint ./src",
     "build": "babel src --out-dir dist",
     "build-demo": "browserify demo/index.js -o demo/bundle.js",
+    "watch-demo": "watchify demo/index.js -o demo/bundle.js -v",
     "watch": "babel src --watch --out-dir dist",
     "prepublish": "npm run build"
   },
@@ -74,7 +75,8 @@
     "tap-closer": "^1.0.0",
     "tap-status": "^1.0.1",
     "tape": "^4.4.0",
-    "tape-catch": "^1.0.4"
+    "tape-catch": "^1.0.4",
+    "watchify": "^3.7.0"
   },
   "peerDependencies": {
     "react": ">= 0.14.0"
