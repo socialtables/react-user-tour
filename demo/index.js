@@ -213,6 +213,12 @@ class Demo extends Component {
 								selector: ".stop-6",
 								title: <div style={tourTitleStyle}>What?</div>,
 								body: <div style={tourMessageStyle}>we'll even take care of scrolling to elements outside of the viewbox. Enjoy!</div>
+							},
+							{
+								step: 7,
+								selector: ".dolores",
+								title: <div style={tourTitleStyle}>What Side Scrolling To?!?!?!?</div>,
+								body: <div style={tourMessageStyle}>yeah, it's pretty dang sweet!</div>
 							}
 						]}
 					/>

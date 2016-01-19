@@ -5,5 +5,6 @@ export default function scrollToPosition({el, x = 0, y = 0}, cb) {
     ease: "out-sine",
     duration: 500
   });
-  setTimeout(cb, 501);
+  // need to give a little time for move to happen before firing callback
+  setTimeout(cb, 200);
 }

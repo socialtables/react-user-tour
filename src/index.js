@@ -37,6 +37,7 @@ export default class ReactUserTour extends Component {
 			this.props.style.height,
 			currentTourStep.position,
 			elPos => {
+				console.log(elPos);
 				if (elPos) {
 					this.setState({ elPos });
 				}
@@ -93,8 +94,7 @@ export default class ReactUserTour extends Component {
 		cb(elPos);
 	}
 
-	getStepPosition(selector, tourElWidth, tourElHeight, overridePos, cb) {
-		console.log(cb);
+	getStepPosition(selector, tourElWidth, tourElHeight, overridePos, cb = () => {}) {
 		const windowHeight = window.innerHeight;
 		const windowWidth = window.innerWidth;
 		const el = document.querySelector(selector);
@@ -136,7 +136,7 @@ export default class ReactUserTour extends Component {
 				needsScroll = true;
 			}
 			if (needsScroll) {
-				position = scrollToPosition({el, x, y}, () => {
+				scrollToPosition({el, x, y}, () => {
 					this.setPosition(
 						el, 
 						windowWidth, 
