@@ -11,18 +11,90 @@ export default class ReactUserTour extends Component {
 
 	constructor(props) {
 		super(props);
-		this.prevPos = {
-			top: 0,
-			left: 0
+		this.state = {
+			elPos: {
+				top: 0,
+				left: 0
+			}
 		};
 		this.getStepPosition = this.getStepPosition.bind(this);
+		this.setPosition = this.setPosition.bind(this);
 	}
 
-	shouldComponentUpdate(nextProps) {
-		return this.props.step !== nextProps.step || this.props.active !== nextProps.active;
+	shouldComponentUpdate(nextProps, nextState) {
+		const stepChanged = this.props.step !== nextProps.step;
+		const activeStatusChanged = this.props.active !== nextProps.active;
+		const topChanged = this.state.elPos.top !== nextState.elPos.top;
+		const leftChanged = this.state.elPos.left !== nextState.elPos.left;
+		return stepChanged || activeStatusChanged || topChanged || leftChanged;
 	}
 
-	getStepPosition(selector, tourElWidth, tourElHeight, overridePos) {
+	componentDidUpdate() {
+		const currentTourStep = this.props.steps.filter(step => step.step === this.props.step)[0];
+		const position = this.getStepPosition(
+			currentTourStep.selector,
+			this.props.style.width,
+			this.props.style.height,
+			currentTourStep.position,
+			elPos => {
+				if (elPos) {
+					this.setState({ elPos });
+				}
+			}
+		);
+	}
+
+	setPosition(el, windowWidth, windowHeight, position, tourElWidth, overridePos, tourElHeight, cb) {
+		const shouldPositionLeft = viewBoxHelpers.shouldPositionLeft(windowWidth, position.left);
+		const shouldPositionAbove = viewBoxHelpers.shouldPositionAbove(windowHeight, position.bottom);
+		const shouldPositionBelow = viewBoxHelpers.shouldPositionBelow(position.top);
+		let elPos;
+		if (overridePos && positions[overridePos]) {
+			elPos = positions[overridePos]({
+				position,
+				tourElWidth,
+				tourElHeight,
+				arrowSize: this.props.arrowSize,
+				offsetHeight: el.offsetHeight
+			});
+		}
+		else if (shouldPositionLeft && !shouldPositionAbove && !shouldPositionBelow) {
+			elPos = positions.left({position, tourElWidth});
+		}
+		else if (shouldPositionAbove) {
+			elPos = shouldPositionLeft ? positions.topLeft({
+				position,
+				tourElWidth,
+				tourElHeight,
+				arrowSize: this.props.arrowSize
+			}) :
+			positions.top({
+				position,
+				tourElHeight,
+				arrowSize: this.props.arrowSize
+			});
+		}
+		else if (shouldPositionBelow) {
+			elPos = shouldPositionLeft ? positions.bottomLeft({
+				position,
+				tourElWidth,
+				arrowSize: this.props.arrowSize,
+				offsetHeight: el.offsetHeight
+			}) :
+			positions.bottom({
+				position,
+				arrowSize: this.props.arrowSize,
+				offsetHeight: el.offsetHeight
+			});
+		}
+		else {
+			elPos = positions.right({position});
+		}
+		cb(elPos);
+	}
+
+	getStepPosition(selector, tourElWidth, tourElHeight, overridePos, cb) {
+		console.log(cb);
 		const windowHeight = window.innerHeight;
 		const windowWidth = window.innerWidth;
 		const el = document.querySelector(selector);
@@ -30,62 +102,68 @@ export default class ReactUserTour extends Component {
 			let position = el ? el.getBoundingClientRect() : {};
 			const isElementBelowViewBox = viewBoxHelpers.isElementBelowViewBox(windowHeight, position.top);
 			const isElementAboveViewBox = viewBoxHelpers.isElementAboveViewBox(position.bottom);
+			const isElementLeftOfViewBox = viewBoxHelpers.isElementLeftOfViewBox(windowWidth, position.left);
+			const isElementRightOfViewBox = viewBoxHelpers.isElementRightOfViewBox(windowWidth, position.right);
+			let needsScroll = false;
+			let x = 0;
+			let y = 0;
 			if (isElementBelowViewBox) {
-				position = scrollToPosition(el, position.bottom);
+				y = position.bottom;
+				if (isElementLeftOfViewBox) {
+					x = position.left;
+				}
+				else if (isElementRightOfViewBox) {
+					x = position.right;
+				}
+				needsScroll = true;
 			}
 			else if (isElementAboveViewBox) {
-				position = scrollToPosition(el, window.pageYOffset + position.top);
+				y = window.pageYOffset + position.top;
+				if (isElementLeftOfViewBox) {
+					x = position.left;
+				}
+				else if (isElementRightOfViewBox) {
+					x = position.right;
+				}
+				needsScroll = true;
 			}
-			const shouldPositionLeft = viewBoxHelpers.shouldPositionLeft(windowWidth, position.left);
-			const shouldPositionAbove = viewBoxHelpers.shouldPositionAbove(windowHeight, position.bottom);
-			const shouldPositionBelow = viewBoxHelpers.shouldPositionBelow(position.top);
-			let elPos;
-			if (overridePos && positions[overridePos]) {
-				elPos = positions[overridePos]({
-					position,
-					tourElWidth,
-					tourElHeight,
-					arrowSize: this.props.arrowSize,
-					offsetHeight: el.offsetHeight
-				});
+			else if (isElementLeftOfViewBox) {
+				x = position.left;
+				needsScroll = true;
 			}
-			else if (shouldPositionLeft && !shouldPositionAbove && !shouldPositionBelow) {
-				elPos = positions.left({position, tourElWidth});
+			else if (isElementRightOfViewBox) {
+				x = position.right;
+				needsScroll = true;
 			}
-			else if (shouldPositionAbove) {
-				elPos = shouldPositionLeft ? positions.topLeft({
-					position,
-					tourElWidth,
-					tourElHeight,
-					arrowSize: this.props.arrowSize
-				}) :
-				positions.top({
-					position,
-					tourElHeight,
-					arrowSize: this.props.arrowSize
-				});
-			}
-			else if (shouldPositionBelow) {
-				elPos = shouldPositionLeft ? positions.bottomLeft({
-					position,
-					tourElWidth,
-					arrowSize: this.props.arrowSize,
-					offsetHeight: el.offsetHeight
-				}) :
-				positions.bottom({
-					position,
-					arrowSize: this.props.arrowSize,
-					offsetHeight: el.offsetHeight
+			if (needsScroll) {
+				position = scrollToPosition({el, x, y}, () => {
+					this.setPosition(
+						el, 
+						windowWidth, 
+						windowHeight, 
+						position, 
+						tourElWidth, 
+						overridePos, 
+						tourElHeight, 
+						cb
+					);
 				});
 			}
 			else {
-				elPos = positions.right({position});
+				this.setPosition(
+					el, 
+					windowWidth, 
+					windowHeight, 
+					position, 
+					tourElWidth, 
+					overridePos, 
+					tourElHeight, 
+					cb
+				);
 			}
-			this.prevPos = elPos;
-			return elPos;
 		}
 		else {
-			return this.prevPos;
+			cb(null);
 		}
 	}
 
@@ -94,12 +172,7 @@ export default class ReactUserTour extends Component {
 		if (!this.props.active || !currentTourStep) {
 			return <span />;
 		}
-		const position = this.getStepPosition(
-			currentTourStep.selector,
-			this.props.style.width,
-			this.props.style.height,
-			currentTourStep.position
-		);
+		const position = this.state.elPos;
 		const style = {...this.props.style};
 		const arrow = (
 			this.props.arrow ||
