@@ -118,6 +118,7 @@ export default class ReactUserTour extends Component {
 			this.props.step !== this.props.steps.length ?
 				<TourButton
 					onClick={() => this.props.onNext(this.props.step + 1)}
+					onTouchTap={() => this.props.onNext(this.props.step + 1)}
 					{...extraButtonProps}
 					className="react-user-tour-next-button">
 						{this.props.nextButtonText}
@@ -128,6 +129,7 @@ export default class ReactUserTour extends Component {
 			this.props.step !== 1 ?
 				<TourButton
 					onClick={() => this.props.onBack(this.props.step - 1)}
+					onTouchTap={() => this.props.onBack(this.props.step - 1)}
 					{...extraButtonProps}
 					className="react-user-tour-back-button">
 						{this.props.backButtonText}
@@ -138,6 +140,7 @@ export default class ReactUserTour extends Component {
 			this.props.step === this.props.steps.length ?
 				<TourButton
 					onClick={() => this.props.onCancel()}
+					onTouchTap={() => this.props.onCancel}
 					{...extraButtonProps}
 					className="react-user-tour-done-button">
 						{this.props.doneButtonText}
@@ -164,7 +167,8 @@ export default class ReactUserTour extends Component {
 			!this.props.hideClose ?
 				<span className="react-user-tour-close"
 					style={xStyle}
-					onClick={this.props.onCancel}>
+					onClick={this.props.onCancel}
+					onTouchTap={this.props.onCancel}>
 						Close
 				</span> : ""
 		);
