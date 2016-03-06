@@ -63,7 +63,7 @@ Boolean to disable the showing of the close text in the upper left of the compon
 ### Use
 
 ```js
-import React, { Component } From "react";
+import React, { Component }from "react";
 import Tour from "react-user-tour";
 export default class UserTour extends Component {
 	constructor() {
@@ -105,7 +105,7 @@ export default class UserTour extends Component {
 
 - - -
 
-Copyright (C) 2015 Social Tables, Inc. (https://www.socialtables.com) All rights reserved.
+Copyright (C) 2016 Social Tables, Inc. (https://www.socialtables.com) All rights reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 
