@@ -54,6 +54,9 @@ Text that will appear on the button that moves the tour backwards. Defaults to `
 #### `doneButtonText`
 Text that will appear on the button that finishes the tour. Defaults to `Done`
 
+#### `closeButtonText`
+Text that will appear on the button that closes the tour. Defaults to `Close`
+
 #### `hideButtons`
 Boolean to disable the showing of next/back/done buttons. Set this to true if you want to insert your own buttons in the body.
 
