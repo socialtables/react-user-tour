@@ -169,7 +169,7 @@ export default class ReactUserTour extends Component {
 					style={xStyle}
 					onClick={this.props.onCancel}
 					onTouchTap={this.props.onCancel}>
-						Close
+						{this.props.closeButtonText}
 				</span> : ""
 		);
 
@@ -208,6 +208,7 @@ ReactUserTour.defaultProps = {
 	nextButtonText: "Next",
 	backButtonText: "Back",
 	doneButtonText: "Done",
+	closeButtonText: "Close",
 	buttonContainerStyle: {
 		position: "absolute",
 		bottom: 10,
