@@ -55,14 +55,14 @@ export default class ReactUserTour extends Component {
 					tourElHeight,
 					arrowSize: this.props.arrowSize,
 					offsetHeight: el.offsetHeight,
-					margin,
+					margin
 				});
 			}
 			else if (shouldPositionLeft && !shouldPositionAbove && !shouldPositionBelow) {
 				elPos = positions.left({
 					position,
 					tourElWidth,
-					margin,
+					margin
 				});
 			}
 			else if (shouldPositionAbove) {
@@ -71,13 +71,13 @@ export default class ReactUserTour extends Component {
 					tourElWidth,
 					tourElHeight,
 					arrowSize: this.props.arrowSize,
-					margin,
+					margin
 				}) :
 				positions.top({
 					position,
 					tourElHeight,
 					arrowSize: this.props.arrowSize,
-					margin,
+					margin
 				});
 			}
 			else if (shouldPositionBelow) {
@@ -86,19 +86,19 @@ export default class ReactUserTour extends Component {
 					tourElWidth,
 					arrowSize: this.props.arrowSize,
 					offsetHeight: el.offsetHeight,
-					margin,
+					margin
 				}) :
 				positions.bottom({
 					position,
 					arrowSize: this.props.arrowSize,
 					offsetHeight: el.offsetHeight,
-					margin,
+					margin
 				});
 			}
 			else {
 				elPos = positions.right({
 					position,
-					margin,
+					margin
 				});
 			}
 
@@ -128,19 +128,9 @@ export default class ReactUserTour extends Component {
 			currentTourStep.verticalOffset
 		);
 		const style = {...this.props.style};
-		const useCustomArrow = (customArrow) =>
-			"function" === typeof customArrow ?
-				customArrow({
-					position: position.positioned,
-					width: this.props.style.width,
-					height: this.props.style.height,
-					size: this.props.arrowSize,
-					color: this.props.arrowColor
-				})
-				: customArrow;
 		const arrow = (
 			this.props.arrow ?
-				useCustomArrow(this.props.arrow)
+				this.useCustomArrow(position)
 			: <Arrow
 				position={position.positioned}
 				width={this.props.style.width}
@@ -227,6 +217,19 @@ export default class ReactUserTour extends Component {
 				</Motion>
 			</div>
 		);
+	}
+
+	useCustomArrow(position) {
+		const customArrow = this.props.arrow;
+		return typeof customArrow === "function" ?
+			customArrow({
+				position: position.positioned,
+				width: this.props.style.width,
+				height: this.props.style.height,
+				size: this.props.arrowSize,
+				color: this.props.arrowColor
+			})
+			: customArrow;
 	}
 }
 
