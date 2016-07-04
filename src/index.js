@@ -22,7 +22,7 @@ export default class ReactUserTour extends Component {
 		return this.props.step !== nextProps.step || this.props.active !== nextProps.active;
 	}
 
-	getStepPosition(selector, tourElWidth, tourElHeight, overridePos) {
+	getStepPosition(selector, tourElWidth, tourElHeight, overridePos, tourElHorizontalOffset = 25, tourElVerticalOffset = 0) {
 		const windowHeight = window.innerHeight;
 		const windowWidth = window.innerWidth;
 		const el = document.querySelector(selector);
@@ -46,23 +46,30 @@ export default class ReactUserTour extends Component {
 					tourElWidth,
 					tourElHeight,
 					arrowSize: this.props.arrowSize,
-					offsetHeight: el.offsetHeight
+					offsetHeight: el.offsetHeight,
+					horizontalOffset: tourElHorizontalOffset
 				});
 			}
 			else if (shouldPositionLeft && !shouldPositionAbove && !shouldPositionBelow) {
-				elPos = positions.left({position, tourElWidth});
+				elPos = positions.left({
+					position,
+					tourElWidth,
+					horizontalOffset: tourElHorizontalOffset
+				});
 			}
 			else if (shouldPositionAbove) {
 				elPos = shouldPositionLeft ? positions.topLeft({
 					position,
 					tourElWidth,
 					tourElHeight,
-					arrowSize: this.props.arrowSize
+					arrowSize: this.props.arrowSize,
+					horizontalOffset: tourElHorizontalOffset
 				}) :
 				positions.top({
 					position,
 					tourElHeight,
-					arrowSize: this.props.arrowSize
+					arrowSize: this.props.arrowSize,
+					horizontalOffset: tourElHorizontalOffset
 				});
 			}
 			else if (shouldPositionBelow) {
@@ -70,17 +77,25 @@ export default class ReactUserTour extends Component {
 					position,
 					tourElWidth,
 					arrowSize: this.props.arrowSize,
-					offsetHeight: el.offsetHeight
+					offsetHeight: el.offsetHeight,
+					horizontalOffset: tourElHorizontalOffset
 				}) :
 				positions.bottom({
 					position,
 					arrowSize: this.props.arrowSize,
-					offsetHeight: el.offsetHeight
+					offsetHeight: el.offsetHeight,
+					horizontalOffset: tourElHorizontalOffset
 				});
 			}
 			else {
-				elPos = positions.right({position});
+				elPos = positions.right({
+					position,
+					horizontalOffset: tourElHorizontalOffset
+				});
 			}
+
+			elPos.top += tourElVerticalOffset;
+
 			this.prevPos = elPos;
 			return elPos;
 		}
@@ -98,12 +113,25 @@ export default class ReactUserTour extends Component {
 			currentTourStep.selector,
 			this.props.style.width,
 			this.props.style.height,
-			currentTourStep.position
+			currentTourStep.position,
+			currentTourStep.horizontalOffset,
+			currentTourStep.verticalOffset
 		);
 		const style = {...this.props.style};
+		const useCustomArrow = (customArrow) =>
+			"function" === typeof customArrow ?
+				customArrow({
+					position: position.positioned,
+					width: this.props.style.width,
+					height: this.props.style.height,
+					size: this.props.arrowSize,
+					color: this.props.arrowColor
+				})
+				: customArrow;
 		const arrow = (
-			this.props.arrow ||
-			<Arrow
+			this.props.arrow ?
+				useCustomArrow(this.props.arrow)
+			: <Arrow
 				position={position.positioned}
 				width={this.props.style.width}
 				height={this.props.style.height}

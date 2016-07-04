@@ -122,6 +122,24 @@ test("should not have a default arrow that will point to selected dom class if a
 	assert.end();
 });
 
+test("should call render custom react component provided as arrow property", (assert) => {
+	const component = <Tour {...props} step={3} arrow={<span className="my-custom-arrow"/>}/>
+	const result = renderComponent(component);
+	assert.throws(() => throwNoClass(result, "react-user-tour-arrow"));
+	assert.ok(TestUtils.findRenderedDOMComponentWithClass(result, "my-custom-arrow"), "arrow exists");
+	ReactDOM.unmountComponentAtNode(node);
+	assert.end();
+});
+
+test("should call function provided as arrow property and render element returned by it", (assert) => {
+	const component = <Tour {...props} step={3} arrow={() => <span className="my-custom-arrow"/>}/>
+	const result = renderComponent(component);
+	assert.throws(() => throwNoClass(result, "react-user-tour-arrow"));
+	assert.ok(TestUtils.findRenderedDOMComponentWithClass(result, "my-custom-arrow"), "arrow exists");
+	ReactDOM.unmountComponentAtNode(node);
+	assert.end();
+});
+
 test("should not any buttons or the associated button container if hideButtons is true", (assert) => {
 	const component = <Tour {...props} step={3} hideButtons={true}/>
 	const result = renderComponent(component);
