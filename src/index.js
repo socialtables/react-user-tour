@@ -22,7 +22,15 @@ export default class ReactUserTour extends Component {
 		return this.props.step !== nextProps.step || this.props.active !== nextProps.active;
 	}
 
-	getStepPosition(selector, tourElWidth, tourElHeight, overridePos, tourElHorizontalOffset = 25, tourElVerticalOffset = 0) {
+	getStepPosition(
+		selector,
+		tourElWidth,
+		tourElHeight,
+		overridePos,
+		margin = 25,
+		horizontalOffset = 0,
+		verticalOffset = 0
+	) {
 		const windowHeight = window.innerHeight;
 		const windowWidth = window.innerWidth;
 		const el = document.querySelector(selector);
@@ -47,14 +55,14 @@ export default class ReactUserTour extends Component {
 					tourElHeight,
 					arrowSize: this.props.arrowSize,
 					offsetHeight: el.offsetHeight,
-					horizontalOffset: tourElHorizontalOffset
+					margin,
 				});
 			}
 			else if (shouldPositionLeft && !shouldPositionAbove && !shouldPositionBelow) {
 				elPos = positions.left({
 					position,
 					tourElWidth,
-					horizontalOffset: tourElHorizontalOffset
+					margin,
 				});
 			}
 			else if (shouldPositionAbove) {
@@ -63,13 +71,13 @@ export default class ReactUserTour extends Component {
 					tourElWidth,
 					tourElHeight,
 					arrowSize: this.props.arrowSize,
-					horizontalOffset: tourElHorizontalOffset
+					margin,
 				}) :
 				positions.top({
 					position,
 					tourElHeight,
 					arrowSize: this.props.arrowSize,
-					horizontalOffset: tourElHorizontalOffset
+					margin,
 				});
 			}
 			else if (shouldPositionBelow) {
@@ -78,23 +86,24 @@ export default class ReactUserTour extends Component {
 					tourElWidth,
 					arrowSize: this.props.arrowSize,
 					offsetHeight: el.offsetHeight,
-					horizontalOffset: tourElHorizontalOffset
+					margin,
 				}) :
 				positions.bottom({
 					position,
 					arrowSize: this.props.arrowSize,
 					offsetHeight: el.offsetHeight,
-					horizontalOffset: tourElHorizontalOffset
+					margin,
 				});
 			}
 			else {
 				elPos = positions.right({
 					position,
-					horizontalOffset: tourElHorizontalOffset
+					margin,
 				});
 			}
 
-			elPos.top += tourElVerticalOffset;
+			elPos.left += horizontalOffset;
+			elPos.top += verticalOffset;
 
 			this.prevPos = elPos;
 			return elPos;
@@ -114,6 +123,7 @@ export default class ReactUserTour extends Component {
 			this.props.style.width,
 			this.props.style.height,
 			currentTourStep.position,
+			currentTourStep.margin,
 			currentTourStep.horizontalOffset,
 			currentTourStep.verticalOffset
 		);

@@ -1,42 +1,42 @@
 const positions = {
-	right: ({position, horizontalOffset}) => {
+	right: ({position, margin}) => {
 		return {
-			left: position.right + horizontalOffset,
+			left: position.right + margin,
 			top: position.top + window.pageYOffset,
 			positioned: "right"
 		};
 	},
-	left: ({position, tourElWidth, horizontalOffset}) => {
+	left: ({position, tourElWidth, margin}) => {
 		return {
-			left: (position.left - horizontalOffset) - tourElWidth,
+			left: (position.left - margin) - tourElWidth,
 			top: position.top + window.pageYOffset,
 			positioned: "left"
 		};
 	},
-	top: ({position, tourElHeight, arrowSize, horizontalOffset}) => {
+	top: ({position, tourElHeight, arrowSize, margin}) => {
 		return {
 			left: position.left,
 			top: (position.top + window.pageYOffset) - tourElHeight - arrowSize,
 			positioned: "top"
 		};
 	},
-	topLeft: ({position, tourElWidth, tourElHeight, arrowSize, horizontalOffset}) => {
+	topLeft: ({position, tourElWidth, tourElHeight, arrowSize, margin}) => {
 		return {
-			left: (position.left + horizontalOffset) - tourElWidth,
+			left: (position.left + margin) - tourElWidth,
 			top: (position.top + window.pageYOffset) - tourElHeight - arrowSize,
 			positioned: "topLeft"
 		};
 	},
-	bottom: ({position, arrowSize, offsetHeight, horizontalOffset}) => {
+	bottom: ({position, arrowSize, offsetHeight, margin}) => {
 		return {
 			left: position.left,
 			top: (position.top + window.pageYOffset) + offsetHeight + arrowSize,
 			positioned: "bottom"
 		};
 	},
-	bottomLeft: ({position, tourElWidth, arrowSize, offsetHeight, horizontalOffset}) => {
+	bottomLeft: ({position, tourElWidth, arrowSize, offsetHeight, margin}) => {
 		return {
-			left: (position.left + horizontalOffset) - tourElWidth,
+			left: (position.left + margin) - tourElWidth,
 			top: (position.top + window.pageYOffset) + offsetHeight + arrowSize,
 			positioned: "bottomLeft"
 		};
