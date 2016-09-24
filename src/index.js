@@ -113,6 +113,22 @@ export default class ReactUserTour extends Component {
 		}
 	}
 
+	getCustomArrow(position) {
+		return (
+				typeof this.props.arrow === "function" 
+				?
+				this.props.arrow({
+					position: position.positioned,
+					width: this.props.style.width,
+					height: this.props.style.height,
+					size: this.props.arrowSize,
+					color: this.props.arrowColor
+				})
+				: 
+				this.props.arrow
+			);
+	}
+
 	render() {
 		const currentTourStep = this.props.steps.filter(step => step.step === this.props.step)[0];
 		if (!this.props.active || !currentTourStep) {
@@ -129,9 +145,11 @@ export default class ReactUserTour extends Component {
 		);
 		const style = {...this.props.style};
 		const arrow = (
-			this.props.arrow ?
-				this.useCustomArrow(position)
-			: <Arrow
+			this.props.arrow
+			?
+			this.getCustomArrow(position)
+			: 
+			<Arrow
 				position={position.positioned}
 				width={this.props.style.width}
 				height={this.props.style.height}
@@ -217,19 +235,6 @@ export default class ReactUserTour extends Component {
 				</Motion>
 			</div>
 		);
-	}
-
-	useCustomArrow(position) {
-		const customArrow = this.props.arrow;
-		return typeof customArrow === "function" ?
-			customArrow({
-				position: position.positioned,
-				width: this.props.style.width,
-				height: this.props.style.height,
-				size: this.props.arrowSize,
-				color: this.props.arrowColor
-			})
-			: customArrow;
 	}
 }
 
