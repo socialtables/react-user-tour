@@ -1,6 +1,6 @@
 {
   "name": "react-user-tour",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "give your user a guided tour around your application",
   "main": "dist/index.js",
   "browserify": {
