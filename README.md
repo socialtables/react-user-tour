@@ -30,6 +30,9 @@ An array of steps. Each step object takes: step (integer), selector (CSS selecto
 #### `style`
 Optional style object.
 
+### `containerStyle`
+Optional style object for the top level component container.
+
 #### `buttonStyle`
 Optional style object for buttons displayed on component.
 
