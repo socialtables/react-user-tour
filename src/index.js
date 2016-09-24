@@ -220,7 +220,7 @@ export default class ReactUserTour extends Component {
 		);
 
 		return (
-			<div className="react-user-tour-container">
+			<div className="react-user-tour-container" style={this.props.containerStyle}>
 				<Motion style={{x: spring(position.left), y: spring(position.top)}}>
 					{({x, y}) =>
 
@@ -248,6 +248,7 @@ ReactUserTour.defaultProps = {
 		color: "#494949",
 		boxShadow: "0 6px 8px 0 rgba(0, 0, 0, 0.24)"
 	},
+	containerStyle: {},
 	onCancel: () => {},
 	onNext: () => {},
 	onBack: () => {},

@@ -202,3 +202,12 @@ test("user can assign custom style to a button", (assert) => {
 	ReactDOM.unmountComponentAtNode(node);
 	assert.end();
 })
+
+test("user can pass custom container styles", (assert) => {
+	const component = <Tour {...props} containerStyle={{color: "red"}} />
+	const result = renderComponent(component);
+	const container = TestUtils.findRenderedDOMComponentWithClass(result, "react-user-tour-container");
+	assert.ok(container.style.color === "red", "button color is red");
+	ReactDOM.unmountComponentAtNode(node);
+	assert.end();
+})
