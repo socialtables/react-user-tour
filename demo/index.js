@@ -7,7 +7,7 @@ class Demo extends Component {
 		super();
 		this.state = {
 			isTourActive: false,
-			tourStep: 1
+			tourStep: 5
 		}
 	}
 	componentDidMount() {
@@ -56,6 +56,10 @@ class Demo extends Component {
 					style={{width: 200, height: 100, left: "40%", top: "34%", position: "absolute", backgroundColor: "orange"}}
 					className="stop-5"
 				/>
+				<div
+					style={{width: 200, height: 100, left: "120%", top: "19%", position: "absolute", backgroundColor: "orange"}}
+					className="stop-6"
+				/>
 				<p style={{color: "white"}}>
 				Dolores phaedrum pri eu. Ex sit quot commune, ut eam error elitr scribentur. Quis reprimique in eos, eum intellegat persequeris te, no mei quidam reformidans. Fugit dignissim no qui, ut equidem scaevola has. Per odio facilisis ei, sed tale ignota quodsi id.
 
@@ -122,7 +126,7 @@ class Demo extends Component {
 				Habeo choro nec in. Prima conclusionemque est ei, ne eam graeco adipisci. Detraxit abhorreant vel te. Dolores deterruisset in quo.
 
 				</p>
-				<p className="stop-6" style={{color: "white"}}>
+				<p className="stop-7" style={{color: "white"}}>
 					so far away.
 				</p>
 				<div style={{position: "absolute", top: 0}}>
@@ -167,6 +171,12 @@ class Demo extends Component {
 							{
 								step: 6,
 								selector: ".stop-6",
+								title: <div style={tourTitleStyle}>A title</div>,
+								body: <div style={tourMessageStyle}>please keep guessing, i added this step late for horizontal scrolling example. once again guess what?</div>
+							},
+							{
+								step: 7,
+								selector: ".stop-7",
 								title: <div style={tourTitleStyle}>What?</div>,
 								body: <div style={tourMessageStyle}>we'll even take care of scrolling to elements outside of the viewbox. Enjoy!</div>
 							}

@@ -1,9 +1,11 @@
 import scrollTo from "scroll-to";
 
-export default function scrollToPosition(el, position) {
-  scrollTo(0, position, {
+export default function scrollToPosition(el, { x, y }, cb) {
+  scrollTo(x, y, {
     ease: "out-sine",
     duration: 500
   });
-  return el.getBoundingClientRect();
+  setTimeout(() => {
+    cb(el.getBoundingClientRect());
+  }, 500);
 }
