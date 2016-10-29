@@ -115,7 +115,7 @@ export default class ReactUserTour extends Component {
 
 	getCustomArrow(position) {
 		return (
-				typeof this.props.arrow === "function" 
+				typeof this.props.arrow === "function"
 				?
 				this.props.arrow({
 					position: position.positioned,
@@ -124,7 +124,7 @@ export default class ReactUserTour extends Component {
 					size: this.props.arrowSize,
 					color: this.props.arrowColor
 				})
-				: 
+				:
 				this.props.arrow
 			);
 	}
@@ -148,7 +148,7 @@ export default class ReactUserTour extends Component {
 			this.props.arrow
 			?
 			this.getCustomArrow(position)
-			: 
+			:
 			<Arrow
 				position={position.positioned}
 				width={this.props.style.width}
@@ -185,8 +185,8 @@ export default class ReactUserTour extends Component {
 		const doneButton = (
 			this.props.step === this.props.steps.length ?
 				<TourButton
-					onClick={() => this.props.onCancel()}
-					onTouchTap={() => this.props.onCancel}
+					onClick={this.props.onCancel}
+					onTouchTap={this.props.onCancel}
 					{...extraButtonProps}
 					className="react-user-tour-done-button">
 						{this.props.doneButtonText}
