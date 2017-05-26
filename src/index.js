@@ -19,7 +19,10 @@ export default class ReactUserTour extends Component {
 	}
 
 	shouldComponentUpdate(nextProps) {
-		return this.props.step !== nextProps.step || this.props.active !== nextProps.active;
+		return this.props.step !== nextProps.step ||
+			this.props.active !== nextProps.active ||
+			this.props.hideButtons !== nextProps.hideButtons ||
+			this.props.hideClose !== nextProps.hideClose;
 	}
 
 	getStepPosition(
