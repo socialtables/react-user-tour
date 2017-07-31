@@ -75,9 +75,15 @@ export default class UserTour extends Component {
 	constructor() {
 		super();
 		this.state = {
-			isTourActive: true,
+			isTourActive: false,
 			tourStep: 1
 		};
+	}
+	componentDidMount() {
+		/* set state to active in cDM to make sure nodes being attached to have been mounted */
+		this.setState({
+			isTourActive: true
+		});
 	}
 	render() {
 		return (
