@@ -19,16 +19,10 @@
 		"no-undefined": 0,
 		"no-void": 2,
 		"quotes": [1, "double"],
-		"space-after-keywords": 2,
+		"keyword-spacing": 2,
 		"wrap-iife": [2, "outside"],
 		"no-underscore-dangle": 2,
 		"dot-notation": 0
-	},
-	"ecmaFeatures": {
-		"modules": true,
-		"blockBindings": true,
-		"forOf": true,
-		"jsx": true
 	},
 	"plugins": [
 		"react"
