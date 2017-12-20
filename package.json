@@ -1,5 +1,5 @@
 {
-  "name": "react-user-tour",
+  "name": "react-product-intro",
   "version": "3.0.0",
   "description": "give your user a guided tour around your application",
   "main": "dist/index.js",
@@ -51,7 +51,7 @@
   "author": "Social Tables",
   "license": "Apache-2.0",
   "dependencies": {
-    "react-motion": "^0.4.2",
+    "react-motion": "^0.5.2",
     "scroll-to": "0.0.2"
   },
   "devDependencies": {
